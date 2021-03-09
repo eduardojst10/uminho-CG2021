@@ -11,5 +11,5 @@
  * @param x
  */
 void geraPlano(char* path, float x){
-    write_ponto(path,x,0.0f,x);
+    write_plano(path,x,0.0f,x);
 }

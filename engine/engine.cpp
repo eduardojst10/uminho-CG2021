@@ -8,7 +8,10 @@
 #include <GL/glut.h>
 #endif
 
-#include <math.h>
+#include <math.h>n
+#include <cstring>
+#include <iosfwd>
+#include "engine.h"
 
 void changeSize(int w, int h) {
 
@@ -33,6 +36,58 @@ void changeSize(int w, int h) {
 
     // return to the model view matrix mode
     glMatrixMode(GL_MODELVIEW);
+}
+
+
+
+std::vector<Vertice> renderModel(std::string modelo){
+    m = "../files/" + modelo;
+    std::vector<Vertice> model;
+    ifstream file(m);
+    if(files.is_open()){
+        int nr_vertices = atoi(getline(file,linha));
+        Vertice *v;
+        while(getline(file,linha)){
+                coord_x = strsep(linha,",");
+                v->x = atof(coord_x);
+                coord_y = strsep(linha,",");
+                v->y = atof(coord_y);
+                coord_z = strsep(linha,",");
+                v->z = atof(coord_z);
+                model.push_back(v);
+        }
+
+    }
+
+    return model;
+
+
+}
+
+
+
+std::vector<string> parseXml(std::string file){
+    TiXmlDocument doc(file);
+    doc.LoadFile();
+    std::vector<string> res;
+    TiXmlElement* root = doc.FirstChildElement("scene");
+    if(root){
+        TiXmlElement* model = root -> FirstChildElement();
+        if(model){
+            //needs further testing
+            res.push_back(model->Attribute());
+
+            TiXmlElement* nextModel = model -> NextSiblingElement();
+
+            while(nextModel){
+                model = nextModel;
+                nextModel = model -> NextSiblingElement();
+                res.push_back(model->Attribute());
+            }
+        }
+    }
+
+    return res;
 }
 
 

@@ -10,12 +10,13 @@
  * @param y
  * @param z
  */
-void write_ponto(std::string ficheiro, float x, float y, float z){
+void write_plano(std::string ficheiro, float x, float y, float z){
     std::string path = "../files/" + ficheiro;
 
     std::ofstream file;
     file.open(path);
 
+    file << 6 << "\n";
     file << -x << ", " << y << ", " << -z << "\n";
     file << -x << ", " << y << ", " << z << "\n";
     file << x << ", " << y << ", " << z << "\n";
@@ -26,8 +27,26 @@ void write_ponto(std::string ficheiro, float x, float y, float z){
     file.close();
 
 
+
 }
 
+void write_ponto(std::string ficheiro, float x, float y, float z){
+    std::string path = "../files/" + ficheiro;
+
+    std::ofstream file;
+    file.open(path);
+    file << x << ", " << y << ", " << z << "\n";
+    file.close();
+}
+
+void write_vertices(std::string ficheiro, int vertices){
+    std::string path = "../files/" + ficheiro;
+
+    std::ofstream file;
+    file.open(path);
+    file << vertices << "\n";
+    file.close();
+}
 /**
  * Função que auxilia a validação do input do terminal
  * @param modelo a verificar

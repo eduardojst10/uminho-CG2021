@@ -9,7 +9,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 
 
-add_executable(${PROJECT_NAME} main.cpp models/plano.cpp models/plano.h editor/editor.cpp editor/editor.h )
+add_executable(${PROJECT_NAME} main.cpp models/plano.cpp models/plano.h editor/editor.cpp editor/editor.h)
 find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})
 link_directories(${OpenGL_LIBRARY_DIRS})
