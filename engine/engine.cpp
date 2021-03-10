@@ -13,6 +13,9 @@
 #include <iosfwd>
 #include "engine.h"
 
+using name std;
+std::vector<Vertice> modelo;
+
 void changeSize(int w, int h) {
 
     // Prevent a divide by zero, when window is too short
@@ -38,13 +41,18 @@ void changeSize(int w, int h) {
     glMatrixMode(GL_MODELVIEW);
 }
 
-
+/**
+ * Função que vai ver o modelo e preencher o vector com os vértices
+ * @param modelo
+ * @return
+ */
 
 std::vector<Vertice> renderModel(std::string modelo){
     m = "../files/" + modelo;
     std::vector<Vertice> model;
     ifstream file(m);
-    if(files.is_open()){
+
+    if(file.is_open()){
         int nr_vertices = atoi(getline(file,linha));
         Vertice *v;
         while(getline(file,linha)){
@@ -58,13 +66,36 @@ std::vector<Vertice> renderModel(std::string modelo){
         }
 
     }
+    else {
+
+        cout << "ERRO AO LER FICHEIRO" << endl;
+    }
+
 
     return model;
-
-
 }
 
+/**
+ * Função que desenha com triangulos os veertices do modelo que foi chamado
+ * @param modelo
+ */
 
+void drawVector(std::vector<Vertice> modelo){
+    for(int i=0; i< modelo.size();i+=3){
+        glColor3f(1.0f,1.0f,0.0f);
+        glVertex3f(modelo[i]->x,modelo[i]->y,modelo[i]->z);
+        glColor3f(1.0f,0.0f,1.0f);
+        glVertex3f(modelo[i+1]->x,modelo[i+1]->y,modelo[i+1]->z);
+        glColor3f(0.0f,1.0f,1.0f);
+        glVertex3f(modelo[i+2]->x,modelo[i+2]->y,modelo[i+2]->z);
+    }
+}
+
+/**
+ * Função que dá parse do ficheiro XML
+ * @param file
+ * @return
+ */
 
 std::vector<string> parseXml(std::string file){
     TiXmlDocument doc(file);
@@ -121,7 +152,9 @@ void renderScene(void) {
 
 
     // put drawing instructions here
-
+    glBegin(GL_TRIANGLES);
+    drawVector(modelo);
+    glEnd();
 
     // End of frame
     glutSwapBuffers();
@@ -135,6 +168,9 @@ void renderScene(void) {
 
 
 int main(int argc, char **argv) {
+    if(argc>1){
+
+    }
 
 // init GLUT and the window
     glutInit(&argc, argv);

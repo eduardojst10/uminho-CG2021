@@ -1,6 +1,14 @@
 //
 // Created by eduardo on 09/03/21.
 //
+
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
+#include <math.h>
 #include <math.h>
 #include <algorithm>
 #include <stdio.h>
