@@ -12,9 +12,13 @@
 #include <cstring>
 #include <iosfwd>
 #include "engine.h"
+#include "scene.h"
+#include "model.h"
 
 using name std;
 std::vector<Vertice> modelo;
+
+SCENE models_scene = NULL;
 
 
 void changeSize(int w, int h) {
@@ -48,7 +52,7 @@ void changeSize(int w, int h) {
  * @return
  */
 
-std::vector<Vertice> renderModel(std::string modelo){
+std::vector<Vertice> fill_Model(std::string modelo){
     m = "../files/" + modelo;
     std::vector<Vertice> model;
     ifstream file(m);
@@ -68,7 +72,6 @@ std::vector<Vertice> renderModel(std::string modelo){
 
     }
     else {
-
         cout << "ERRO AO LER FICHEIRO" << endl;
     }
 
@@ -76,21 +79,19 @@ std::vector<Vertice> renderModel(std::string modelo){
     return model;
 }
 
-/**
- * Função que desenha com triangulos os veertices do modelo que foi chamado
- * @param modelo
- */
-
-void drawVector(std::vector<Vertice> modelo){
-    for(int i=0; i< modelo.size();i+=3){
-        glColor3f(1.0f,1.0f,0.0f);
-        glVertex3f(modelo[i]->x,modelo[i]->y,modelo[i]->z);
-        glColor3f(1.0f,0.0f,1.0f);
-        glVertex3f(modelo[i+1]->x,modelo[i+1]->y,modelo[i+1]->z);
-        glColor3f(0.0f,1.0f,1.0f);
-        glVertex3f(modelo[i+2]->x,modelo[i+2]->y,modelo[i+2]->z);
+SCENE parse_All_models(vector<string> scene){
+    models_scene = init_scene();
+    int i;
+    vector<Vertice> pontos;
+    for(i=0;i<scene.size();i++){
+        pontos = fill_Model(scene[i]);
+        MODEL m = init_model();
+        add_Vertices(m,pontos);
+        add_model(models_scene,m);
     }
+    return models_scene;
 }
+
 
 /**
  * Função que dá parse do ficheiro XML
@@ -98,7 +99,7 @@ void drawVector(std::vector<Vertice> modelo){
  * @return
  */
 
-std::vector<string> parseXml(std::string file){
+vector<string> parseXml(std::string file){
     TiXmlDocument doc(file);
     doc.LoadFile();
     std::vector<string> res;
@@ -122,6 +123,21 @@ std::vector<string> parseXml(std::string file){
     return res;
 }
 
+/**
+ * Função que desenha com triangulos os veertices do modelo que foi chamado
+ * @param modelo
+ */
+
+void drawVector(std::vector<Vertice> modelo){
+    for(int i=0; i< modelo.size();i+=3){
+        glColor3f(1.0f,1.0f,0.0f);
+        glVertex3f(modelo[i]->x,modelo[i]->y,modelo[i]->z);
+        glColor3f(1.0f,0.0f,1.0f);
+        glVertex3f(modelo[i+1]->x,modelo[i+1]->y,modelo[i+1]->z);
+        glColor3f(0.0f,1.0f,1.0f);
+        glVertex3f(modelo[i+2]->x,modelo[i+2]->y,modelo[i+2]->z);
+    }
+}
 
 void renderScene(void) {
 
