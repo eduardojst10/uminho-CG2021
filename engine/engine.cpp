@@ -16,6 +16,7 @@
 using name std;
 std::vector<Vertice> modelo;
 
+
 void changeSize(int w, int h) {
 
     // Prevent a divide by zero, when window is too short

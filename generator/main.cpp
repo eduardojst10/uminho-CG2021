@@ -4,9 +4,23 @@
 #include <cstring>
 #include "models/plano.h"
 #include "models/box.h"
-#include "editor/editor.h"
 
 using namespace std;
+
+/**
+ * Função que auxilia a validação do input do terminal
+ * @param modelo a verificar
+ * @param inputs válidos
+ * @return
+ */
+int validaModelo(char *modelo, std::vector<std::string> inputs){
+    int valida=0;
+    for(int i=0; i<inputs.size();i++){
+        if(strcmp(modelo,inputs.at(i).c_str()) == 0 )valida =1;
+    }
+
+    return valida;
+}
 
 
 int main(int argc, char** argv) {
@@ -20,7 +34,7 @@ int main(int argc, char** argv) {
         }
 
         if(strcmp(argv[1],"box")==0){
-            box(argv[4],atof(argv[0]),atof(argv[1]),atof(argv[2]),atof(argv[3]));
+            box(argv[6],atof(argv[2]),atof(argv[3]),atof(argv[4]),atof(argv[5]));
         }
 
         if(strcmp(argv[1],"sphere")==0){}

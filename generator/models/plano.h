@@ -8,9 +8,8 @@
 #ifndef PROJETOCG2021_PLANO_H
 #define PROJETOCG2021_PLANO_H
 
-
+void write_plano(std::string ficheiro, float x, float y, float z);
 void geraPlano(char* path, float x);
-void write_ponto(std::string ficheiro, float x, float y, float z);
 
 
 #endif //PROJETOCG2021_PLANO_H

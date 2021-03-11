@@ -3,13 +3,12 @@
 //
 
 #include "box.h"
-#include "../editor/editor.h"
 
 
 // Esta função é responsável por calcular os pontos dos dois planos paralelos ao plano XY.
 // Primeiro, trata do plano cujo Z > 0, e trata depois do plano cujo Z < 0.
 // Nestes planos, Z é sempre constante.
-void planesXY(std::string file, float x, float y, float z, int div) {
+void planesXY(std::ofstream& ficheiro, float x, float y, float z, int div) {
     // Ordem do processamento: começa no vértice inferior esquerdo, e vai processando uma linha de cada vez.
     // Nota : Vamos assumir que 'z' é o que foi passado como parâmetro pelo utilizador, e 'Z' vai ser z/2 ou -z/2.
     // Cálculos
@@ -44,29 +43,30 @@ void planesXY(std::string file, float x, float y, float z, int div) {
     // uma linha de quadrados, e quando o ciclo terminar, ambas as faces vão estar definidas.
 
     float xAtual = -x/2, yAtual = -y/2, zAtual = z/2;
-
     for (int i=0; i<div; i++) {
         xAtual = -x/2;
         for (int j = 0; j<div; j++) {
             // Primeiro triângulo
-            write_ponto(file, xAtual, yAtual, zAtual);
-            write_ponto(file, xAtual + (x/div), yAtual, zAtual);
-            write_ponto(file, xAtual, yAtual + (y/div), zAtual);
+            ficheiro << xAtual << ", " << yAtual << ", " << zAtual << "\n";
+            ficheiro << xAtual + (x/div) << ", " << yAtual << ", " << zAtual << "\n";
+            ficheiro << xAtual << ", " << yAtual + (y/div) << ", " << zAtual << "\n";
 
             // Primeiro triângulo inverso
-            write_ponto(file, xAtual, yAtual, - zAtual);
-            write_ponto(file, xAtual + (x/div), yAtual, - zAtual);
-            write_ponto(file, xAtual, yAtual + (y/div), - zAtual);
+
+            ficheiro << xAtual << ", " << yAtual << ", " << -zAtual << "\n";
+            ficheiro << xAtual + (x/div) << ", " << yAtual << ", " << -zAtual << "\n";
+            ficheiro << xAtual << ", " << yAtual + (y/div) << ", " << -zAtual << "\n";
 
             // Segundo triângulo
-            write_ponto(file, xAtual + (x/div), yAtual, zAtual);
-            write_ponto(file, xAtual + (x/div), yAtual + (y/div), zAtual);
-            write_ponto(file, xAtual, yAtual + (y/div), zAtual);
+            ficheiro << xAtual + (x/div) << ", " << yAtual << ", " << zAtual << "\n";
+            ficheiro << xAtual + (x/div) << ", " << yAtual + (y/div)<< ", " << zAtual << "\n";
+            ficheiro << xAtual << ", " << yAtual + (y/div) << ", " << zAtual << "\n";
 
             // Segundo triângulo inverso
-            write_ponto(file, xAtual + (x/div), yAtual, - zAtual);
-            write_ponto(file, xAtual + (x/div), yAtual + (y/div), - zAtual);
-            write_ponto(file, xAtual, yAtual + (y/div), - zAtual);
+            ficheiro << xAtual + (x/div) << ", " << yAtual << ", " << -zAtual << "\n";
+            ficheiro << xAtual + (x/div) << ", " << yAtual + (y/div)<< ", " << -zAtual << "\n";
+            ficheiro << xAtual << ", " << yAtual + (y/div) << ", " << -zAtual << "\n";
+
 
             // Atualizar o xAtual
             xAtual += (x/div);
@@ -76,7 +76,7 @@ void planesXY(std::string file, float x, float y, float z, int div) {
     }
 }
 
-void planesYZ(std::string file, float x, float y, float z, int div) {
+void planesYZ(std::ofstream& ficheiro, float x, float y, float z, int div) {
     // Ponto fixo : X
     //
     // Ponto inicial --> Xinicial : x/2;
@@ -103,24 +103,27 @@ void planesYZ(std::string file, float x, float y, float z, int div) {
         zAtual = z/2;
         for (int j = 0; j<div; j++) {
             // Primeiro triângulo
-            write_ponto(file, xAtual, yAtual, zAtual);
-            write_ponto(file, xAtual, yAtual, zAtual - (z/div));
-            write_ponto(file, xAtual, yAtual + (y/div), zAtual);
+            ficheiro << xAtual << ", " << yAtual << ", " << zAtual << "\n";
+            ficheiro << xAtual << ", " << yAtual << ", " << zAtual - (z/div) << "\n";
+            ficheiro << xAtual << ", " << yAtual + (y/div) << ", " << zAtual << "\n";
 
             // Primeiro triângulo inverso
-            write_ponto(file, - xAtual, yAtual, zAtual);
-            write_ponto(file, - xAtual, yAtual, zAtual - (z/div));
-            write_ponto(file, - xAtual, yAtual + (y/div), zAtual);
+            ficheiro << - xAtual << ", " << yAtual << ", " << zAtual << "\n";
+            ficheiro << - xAtual << ", " << yAtual << ", " << zAtual - (z/div) << "\n";
+            ficheiro << - xAtual << ", " << yAtual + (y/div) << ", " << zAtual << "\n";
+
+
 
             // Segundo triângulo
-            write_ponto(file, xAtual, yAtual, zAtual - (z/div));
-            write_ponto(file, xAtual, yAtual + (y/div), zAtual - (z/div));
-            write_ponto(file, xAtual, yAtual + (y/div), zAtual);
+            ficheiro <<  xAtual << ", " << yAtual << ", " << zAtual - (z/div) << "\n";
+            ficheiro <<  xAtual << ", " << yAtual + (y/div) << ", " << zAtual - (z/div) << "\n";
+            ficheiro <<  xAtual << ", " << yAtual + (y/div) << ", " << zAtual << "\n";
+
 
             // Segundo triângulo inverso
-            write_ponto(file, - xAtual, yAtual, zAtual - (z/div));
-            write_ponto(file, - xAtual, yAtual + (y/div), zAtual - (z/div));
-            write_ponto(file, - xAtual, yAtual + (y/div), zAtual);
+            ficheiro <<  -xAtual << ", " << yAtual << ", " << zAtual - (z/div) << "\n";
+            ficheiro <<  -xAtual << ", " << yAtual + (y/div) << ", " << zAtual - (z/div) << "\n";
+            ficheiro <<  -xAtual << ", " << yAtual + (y/div) << ", " << zAtual << "\n";
 
             // Atualizar o zAtual
             zAtual -= (z/div);
@@ -128,9 +131,10 @@ void planesYZ(std::string file, float x, float y, float z, int div) {
         // Atualizar o yAtual
         yAtual += (y/div);
     }
+
 }
 
-void planesXZ(std::string file, float x, float y, float z, int div) {
+void planesXZ(std::ofstream& ficheiro, float x, float y, float z, int div) {
     // Ponto fixo : Y
     //
     // Ponto inicial --> Xinicial : -x/2;
@@ -157,41 +161,52 @@ void planesXZ(std::string file, float x, float y, float z, int div) {
         xAtual = -x/2;
         for (int j = 0; j<div; j++) {
             // Primeiro triângulo
-            write_ponto(file, xAtual, yAtual, zAtual);
-            write_ponto(file, xAtual + (x/div), yAtual, zAtual);
-            write_ponto(file, xAtual, yAtual, zAtual - (z/div));
+            ficheiro <<  xAtual << ", " << yAtual << ", " << zAtual  << "\n";
+            ficheiro <<  xAtual + (x/div) << ", " << yAtual  << ", " << zAtual << "\n";
+            ficheiro <<  xAtual << ", " << yAtual << ", " << zAtual - (z/div) << "\n";
 
             // Primeiro triângulo inverso
-            write_ponto(file, xAtual, - yAtual, zAtual);
-            write_ponto(file, xAtual + (x/div), - yAtual, zAtual);
-            write_ponto(file, xAtual, - yAtual, zAtual - (z/div));
+
+            ficheiro <<  xAtual << ", " << -yAtual << ", " << zAtual  << "\n";
+            ficheiro <<  xAtual + (x/div) << ", " << -yAtual  << ", " << zAtual << "\n";
+            ficheiro <<  xAtual << ", " << -yAtual << ", " << zAtual - (z/div) << "\n";
 
             // Segundo triângulo
-            write_ponto(file, xAtual + (x/div), yAtual, zAtual);
-            write_ponto(file, xAtual + (x/div), yAtual, zAtual - (z/div));
-            write_ponto(file, xAtual, yAtual, zAtual - (z/div));
+            ficheiro <<  xAtual + (x/div) << ", " << yAtual << ", " << zAtual  << "\n";
+            ficheiro <<  xAtual + (x/div) << ", " << yAtual  << ", " << zAtual - (z/div) << "\n";
+            ficheiro <<  xAtual << ", " << yAtual << ", " << zAtual - (z/div) << "\n";
+
 
             // Segundo triângulo inverso
-            write_ponto(file, xAtual + (x/div), - yAtual, zAtual);
-            write_ponto(file, xAtual + (x/div), - yAtual, zAtual - (z/div));
-            write_ponto(file, xAtual, yAtual, - zAtual - (z/div));
+            ficheiro <<  xAtual + (x/div) << ", " << -yAtual << ", " << zAtual  << "\n";
+            ficheiro <<  xAtual + (x/div) << ", " << -yAtual  << ", " << zAtual - (z/div) << "\n";
+            ficheiro <<  xAtual << ", " << yAtual << ", " << -zAtual - (z/div) << "\n";
+
+
             // Atualizar o xAtual
             xAtual += (x/div);
         }
         // Atualizar o zAtual
         zAtual -= (z/div);
     }
+
 }
 
 void box(std::string file, float x, float y, float z, int div) {
+    std::string path = "../files/" + file;
+
+    std::ofstream ficheiro;
+    ficheiro.open(path);
     // Como primeiro passo, vamos calcular o número de vértices total que o ficheiro contém.
     // A fórmula usada: (div^2)*6 por face. Como são 6 faces, a fórmula é (div^2)*36
     int nrVert = (div*div)*36;
-    write_vertices(file, nrVert);
+    ficheiro << nrVert << "\n";
 
     // Depois de escrever o número de vértices no ficheiro, basta chamar as funções auxiliares definidas em cima
     // e essas funções tratam de calcular e escrever no ficheiro.
-    planesXY(file, x, y, z, div);
-    planesXZ(file, x, y, z, div);
-    planesYZ(file, x, y, z, div);
+    planesXY(ficheiro, x, y, z, div);
+    planesXZ(ficheiro, x, y, z, div);
+    planesYZ(ficheiro, x, y, z, div);
+
+    ficheiro.close();
 }
