@@ -27,9 +27,15 @@ void write_plano(std::string ficheiro, float x, float y, float z){
     file.close();
 
 
-
 }
 
+/**
+ * Função que escreve um ponto
+ * @param ficheiro
+ * @param x
+ * @param y
+ * @param z
+ */
 void write_ponto(std::string ficheiro, float x, float y, float z){
     std::string path = "../files/" + ficheiro;
 
@@ -38,6 +44,12 @@ void write_ponto(std::string ficheiro, float x, float y, float z){
     file << x << ", " << y << ", " << z << "\n";
     file.close();
 }
+
+/**
+ * Função que escreve no inicio do ficheiro .3 o número de vértices que são escritos, Fundamental para dps representar no engine
+ * @param ficheiro
+ * @param vertices
+ */
 
 void write_vertices(std::string ficheiro, int vertices){
     std::string path = "../files/" + ficheiro;

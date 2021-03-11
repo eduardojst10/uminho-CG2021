@@ -3,6 +3,7 @@
 #include <string>
 #include <cstring>
 #include "models/plano.h"
+#include "models/box.h"
 #include "editor/editor.h"
 
 using namespace std;
@@ -18,7 +19,9 @@ int main(int argc, char** argv) {
             geraPlano(argv[3],atof(argv[2]));
         }
 
-        if(strcmp(argv[1],"box")==0){}
+        if(strcmp(argv[1],"box")==0){
+            box(argv[4],atof(argv[0]),atof(argv[1]),atof(argv[2]),atof(argv[3]));
+        }
 
         if(strcmp(argv[1],"sphere")==0){}
 
