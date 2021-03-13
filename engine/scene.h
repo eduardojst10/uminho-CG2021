@@ -10,6 +10,6 @@ typedef struct scene * SCENE;
 
 SCENE init_scene();
 void add_model(SCENE g, MODEL m_add);
-void draw_group (SCENE g);
+void draw_scene (SCENE g);
 
 #endif

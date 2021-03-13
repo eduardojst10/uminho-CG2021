@@ -8,17 +8,23 @@
 #include <GL/glut.h>
 #endif
 
-#include <math.h>n
-#include <cstring>
-#include <iosfwd>
+
+#include "tinyxml/tinyxml.cpp"
+#include "tinyxml/tinyxml.h"
+#include "tinyxml/tinyxmlerror.cpp"
+#include "tinyxml/tinyxmlparser.cpp"
+#include "tinyxml/tinystr.cpp"
+#include "tinyxml/tinystr.h"
 #include "engine.h"
 #include "scene.h"
 #include "model.h"
+using namespace std;
 
-using name std;
-std::vector<Vertice> modelo;
+vector<vertice> modelo;
 
 SCENE models_scene = NULL;
+
+
 
 
 void changeSize(int w, int h) {
@@ -47,26 +53,43 @@ void changeSize(int w, int h) {
 }
 
 /**
- * Função que vai ver o modelo e preencher o vector com os vértices
+ * Função que vai ver o modelo e preencher o vector com os vértices, auxiliar de parse_All_models(vector<string> modelos)
  * @param modelo
  * @return
  */
 
-std::vector<Vertice> fill_Model(std::string modelo){
-    m = "../files/" + modelo;
-    std::vector<Vertice> model;
+std::vector<vertice> fill_Model(string modelo){
+    string m = "../files/" + modelo;
+    vector<vertice> model={};
     ifstream file(m);
+    string linha;
+    string token_del = ",";
+    int nr_vertices,pos;
 
     if(file.is_open()){
-        int nr_vertices = atoi(getline(file,linha));
-        Vertice *v;
+        getline(file,linha);
+          nr_vertices = atoi(linha.c_str());//const char* to str
+
+        vertice v;
         while(getline(file,linha)){
-                coord_x = strsep(linha,",");
-                v->x = atof(coord_x);
-                coord_y = strsep(linha,",");
-                v->y = atof(coord_y);
-                coord_z = strsep(linha,",");
-                v->z = atof(coord_z);
+                //float x
+                pos = linha.find(token_del);
+                string coord_x = linha.substr(0,pos);
+                linha.erase(0, pos + token_del.length());
+                v.x = atof(coord_x.c_str());
+
+                //float y
+                pos = linha.find(token_del);
+                string coord_y = linha.substr(0,pos);
+                linha.erase(0, pos + token_del.length());
+                v.y = atof(coord_y.c_str());
+
+                //float z
+                pos = linha.find(token_del);
+                string coord_z = linha.substr(0,pos);
+                linha.erase(0, pos + token_del.length());
+                v.z = atof(coord_z.c_str());
+
                 model.push_back(v);
         }
 
@@ -79,12 +102,18 @@ std::vector<Vertice> fill_Model(std::string modelo){
     return model;
 }
 
-SCENE parse_All_models(vector<string> scene){
+/**
+ * Função que de um vector de modelos(representados por string) nos dá uma SCENE que é o que vai ser apresentado no ecrã
+ * @param modelos
+ * @return
+ */
+
+SCENE parse_All_models(vector<string> modelos){
     models_scene = init_scene();
     int i;
-    vector<Vertice> pontos;
-    for(i=0;i<scene.size();i++){
-        pontos = fill_Model(scene[i]);
+    vector<vertice> pontos;
+    for(i=0;i<modelos.size();i++){
+        pontos = fill_Model(modelos[i]);
         MODEL m = init_model();
         add_Vertices(m,pontos);
         add_model(models_scene,m);
@@ -97,9 +126,9 @@ SCENE parse_All_models(vector<string> scene){
  * Função que dá parse do ficheiro XML
  * @param file
  * @return
- */
 
-vector<string> parseXml(std::string file){
+
+vector<string> parseXml(const char* file){
     TiXmlDocument doc(file);
     doc.LoadFile();
     std::vector<string> res;
@@ -122,22 +151,17 @@ vector<string> parseXml(std::string file){
 
     return res;
 }
+  */
 
 /**
- * Função que desenha com triangulos os veertices do modelo que foi chamado
- * @param modelo
- */
+ * Função que faz loading do modelo a desenhar e escereve em memória os vértices deste
+ * @param file
 
-void drawVector(std::vector<Vertice> modelo){
-    for(int i=0; i< modelo.size();i+=3){
-        glColor3f(1.0f,1.0f,0.0f);
-        glVertex3f(modelo[i]->x,modelo[i]->y,modelo[i]->z);
-        glColor3f(1.0f,0.0f,1.0f);
-        glVertex3f(modelo[i+1]->x,modelo[i+1]->y,modelo[i+1]->z);
-        glColor3f(0.0f,1.0f,1.0f);
-        glVertex3f(modelo[i+2]->x,modelo[i+2]->y,modelo[i+2]->z);
-    }
+void execut(const char* file){
+    models_scene = parse_All_models(parseXml(file));
 }
+*/
+
 
 void renderScene(void) {
 
@@ -151,7 +175,7 @@ void renderScene(void) {
               0.0f,1.0f,0.0f);
 
     //Eixos
-    glBegin(GL_LINES)
+    glBegin(GL_LINES);
     // X axis in red
     glColor3f(1.0f, 0.0f, 0.0f);
     glVertex3f(-100.0f, 0.0f, 0.0f);
@@ -169,9 +193,7 @@ void renderScene(void) {
 
 
     // put drawing instructions here
-    glBegin(GL_TRIANGLES);
-    drawVector(modelo);
-    glEnd();
+    //draw_scene(models_scene);
 
     // End of frame
     glutSwapBuffers();
@@ -185,9 +207,7 @@ void renderScene(void) {
 
 
 int main(int argc, char **argv) {
-    if(argc>1){
 
-    }
 
 // init GLUT and the window
     glutInit(&argc, argv);
@@ -195,6 +215,8 @@ int main(int argc, char **argv) {
     glutInitWindowPosition(100,100);
     glutInitWindowSize(800,800);
     glutCreateWindow("CG@DI-UM");
+
+    //if (argc > 1) execut(argv[1]);
 
 // Required callback registry
     glutDisplayFunc(renderScene);

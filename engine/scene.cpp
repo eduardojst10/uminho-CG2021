@@ -11,12 +11,12 @@
 struct scene {
     std::vector<MODEL> * models;
 
-}
+};
 
 SCENE init_scene() {
     SCENE g = (SCENE) malloc(sizeof(struct scene));
     if (g) {
-        g->models = new vector<MODEL>();
+        g->models = new std::vector<MODEL>();
     }
     return g;
 }
@@ -28,9 +28,11 @@ void add_model(SCENE g, MODEL m_add) {
     }
 }
 
-void draw_group (SCENE g) {
+/*
+void draw_scene (SCENE g) {
     for(MODEL m : *(g->models)) {
-        draw_model(m);
+        drawModel(m);
     }
-
 }
+*/
+
