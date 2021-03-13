@@ -20,7 +20,6 @@
 #include "model.h"
 using namespace std;
 
-vector<vertice> modelo;
 
 SCENE models_scene = NULL;
 
@@ -58,17 +57,16 @@ void changeSize(int w, int h) {
  * @return
  */
 
-std::vector<vertice> fill_Model(string modelo){
-    string m = "../files/" + modelo;
-    vector<vertice> model={};
-    ifstream file(m);
+vector<vertice> fill_Model(string modelo){
+    modelo = "../files_draw/" + modelo;
+    vector<vertice> model;
+    ifstream file(modelo);
     string linha;
     string token_del = ",";
     int nr_vertices,pos;
-
     if(file.is_open()){
         getline(file,linha);
-          nr_vertices = atoi(linha.c_str());//const char* to str
+        nr_vertices = atoi(linha.c_str());//const char* to str
 
         vertice v;
         while(getline(file,linha)){
@@ -78,11 +76,13 @@ std::vector<vertice> fill_Model(string modelo){
                 linha.erase(0, pos + token_del.length());
                 v.x = atof(coord_x.c_str());
 
+
                 //float y
                 pos = linha.find(token_del);
                 string coord_y = linha.substr(0,pos);
                 linha.erase(0, pos + token_del.length());
                 v.y = atof(coord_y.c_str());
+
 
                 //float z
                 pos = linha.find(token_del);
@@ -90,17 +90,19 @@ std::vector<vertice> fill_Model(string modelo){
                 linha.erase(0, pos + token_del.length());
                 v.z = atof(coord_z.c_str());
 
+
                 model.push_back(v);
         }
 
-    }
-    else {
+    }else {
         cout << "ERRO AO LER FICHEIRO" << endl;
     }
-
+    file.close();
 
     return model;
 }
+
+
 
 /**
  * Função que de um vector de modelos(representados por string) nos dá uma SCENE que é o que vai ser apresentado no ecrã
@@ -111,13 +113,16 @@ std::vector<vertice> fill_Model(string modelo){
 SCENE parse_All_models(vector<string> modelos){
     models_scene = init_scene();
     int i;
+    cout << modelos[0] << "\n";
     vector<vertice> pontos;
     for(i=0;i<modelos.size();i++){
+        cout << "aqui" << "\n";
         pontos = fill_Model(modelos[i]);
         MODEL m = init_model();
         add_Vertices(m,pontos);
         add_model(models_scene,m);
     }
+
     return models_scene;
 }
 
@@ -126,41 +131,46 @@ SCENE parse_All_models(vector<string> modelos){
  * Função que dá parse do ficheiro XML
  * @param file
  * @return
+*/
 
 
-vector<string> parseXml(const char* file){
+vector<string> parseXml(const char* file) {
     TiXmlDocument doc(file);
-    doc.LoadFile();
-    std::vector<string> res;
-    TiXmlElement* root = doc.FirstChildElement("scene");
-    if(root){
-        TiXmlElement* model = root -> FirstChildElement();
-        if(model){
-            //needs further testing
-            res.push_back(model->Attribute());
+    bool valido = doc.LoadFile();
+    vector<string> res;
+    if (valido) {
+        TiXmlElement *root = doc.FirstChildElement("scene");
+        if (root) {
+            TiXmlElement *model = root->FirstChildElement("model");
+            if (model) {
+                //needs further testing
+                res.push_back(model->Attribute("file"));
 
-            TiXmlElement* nextModel = model -> NextSiblingElement();
+                TiXmlElement *nextModel = model->NextSiblingElement("model");
 
-            while(nextModel){
-                model = nextModel;
-                nextModel = model -> NextSiblingElement();
-                res.push_back(model->Attribute());
+                while (nextModel) {
+                    model = nextModel;
+                    nextModel = model->NextSiblingElement("model");
+                    res.push_back(model->Attribute("file"));
+                }
             }
         }
+    }else{
+        std::cout << "Erro a dar parse XML" << "\n";
     }
-
     return res;
 }
-  */
+
 
 /**
  * Função que faz loading do modelo a desenhar e escereve em memória os vértices deste
  * @param file
+*/
 
 void execut(const char* file){
     models_scene = parse_All_models(parseXml(file));
 }
-*/
+
 
 
 void renderScene(void) {
@@ -192,8 +202,10 @@ void renderScene(void) {
 
 
 
+
+
     // put drawing instructions here
-    //draw_scene(models_scene);
+    draw_scene(models_scene);
 
     // End of frame
     glutSwapBuffers();
@@ -207,7 +219,14 @@ void renderScene(void) {
 
 
 int main(int argc, char **argv) {
+    std::cout << argv[1] <<"\n";
 
+
+    if(argc>1) execut(argv[1]);
+
+
+    //vector<string> s1 = parseXml(argv[1]);
+    //vector<vertice> v = fill_Model(s1[0]);
 
 // init GLUT and the window
     glutInit(&argc, argv);

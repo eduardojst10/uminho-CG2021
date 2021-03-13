@@ -27,4 +27,5 @@ struct vertice{
     float z;
 };
 typedef struct vertice * VERTICE;
+
 #endif //GENERATOR_ENGINE_H

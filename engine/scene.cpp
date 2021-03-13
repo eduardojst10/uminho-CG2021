@@ -28,11 +28,11 @@ void add_model(SCENE g, MODEL m_add) {
     }
 }
 
-/*
+
 void draw_scene (SCENE g) {
     for(MODEL m : *(g->models)) {
         drawModel(m);
     }
 }
-*/
+
 

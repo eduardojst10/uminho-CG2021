@@ -29,18 +29,23 @@ void add_Vertices(MODEL m, std::vector<vertice> v) {
     }
 
 }
-/*
+
 
 void drawModel(MODEL m){
     glBegin(GL_TRIANGLES);
-    for(int i=0; i< m->pontos->size();i+=3){
+    vertice v;
+    for(int i=0; i<m->pontos->size();i+=3){
+        v = m->pontos->at(i);
         glColor3f(1.0f,1.0f,0.0f);
-        glVertex3f(m->pontos[i].x,m->pontos[i].y,m->pontos[i].z);
+        glVertex3f(v.x,v.y,v.z);
+        v = m->pontos->at(i+1);
         glColor3f(1.0f,0.0f,1.0f);
-        glVertex3f(m->pontos[i+1].x,m->pontos[i+1].y,m->pontos[i+1].z);
+        glVertex3f(v.x,v.y,v.z);
+        v= m->pontos->at(i+2);
         glColor3f(0.0f,1.0f,1.0f);
-        glVertex3f(m->pontos[i+2].x,m->pontos[i+2].y,m->pontos[i+2].z);
+        glVertex3f(v.x,v.y,v.z);
     }
     glEnd();
 }
- */
+
+
