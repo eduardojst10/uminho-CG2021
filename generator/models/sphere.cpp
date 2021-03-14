@@ -41,13 +41,13 @@ void sphere(std::string file, float radius, int slices, int stacks) {
     //                   --> C: (radius, tetaNovo, phiNovo)
     //                   --> D: (radius, tetaAtual, phiNovo)
 
-    float tetaInit = - (M_PI), phiInit = - (M_PI)/2;
+    float tetaInit = 0, phiInit = 0;
     float tetaAtual = tetaInit, phiAtual = phiInit;
-    float tetaNovo = tetaAtual + (2*M_PI/slices), phiNovo = phiAtual + (M_PI/stacks);
+    float tetaNovo = tetaAtual + (M_PI/slices), phiNovo = phiAtual + (2*M_PI/stacks);
 
     for(int i = 0; i<stacks; i++){
         // reset no teta
-        tetaAtual = tetaInit; tetaNovo = tetaAtual + (2*M_PI/slices);
+        tetaAtual = tetaInit; tetaNovo = tetaAtual + (M_PI/slices);
         for(int j = 0; j<slices; j++) {
             //Cálculo da tradução para cartesiano
             // A: (radius * sin(tetaAtual) * cos(phiAtual),
@@ -71,32 +71,32 @@ void sphere(std::string file, float radius, int slices, int stacks) {
                      << radius * cos(tetaAtual) << ", "
                      << radius * sin(tetaAtual) * sin(phiAtual) << "\n";
 
-            ficheiro << radius * sin(tetaNovo) * cos(phiAtual) << ", "
-                     << radius * cos(tetaNovo) << ", "
-                     << radius * sin(tetaNovo) * sin(phiAtual) << "\n";
-
             ficheiro << radius * sin(tetaNovo) * cos(phiNovo) << ", "
                      << radius * cos(tetaNovo) << ", "
                      << radius * sin(tetaNovo) * sin(phiNovo) << "\n";
+
+            ficheiro << radius * sin(tetaNovo) * cos(phiAtual) << ", "
+                     << radius * cos(tetaNovo) << ", "
+                     << radius * sin(tetaNovo) * sin(phiAtual) << "\n";
 
             //Segundo triângulo - CDA
             ficheiro << radius * sin(tetaNovo) * cos(phiNovo) << ", "
                      << radius * cos(tetaNovo) << ", "
                      << radius * sin(tetaNovo) * sin(phiNovo) << "\n";
 
-            ficheiro << radius * sin(tetaAtual) * cos(phiNovo) << ", "
-                     << radius * cos(tetaAtual) << ", "
-                     << radius * sin(tetaAtual) * sin(phiNovo) << "\n";
-
             ficheiro << radius * sin(tetaAtual) * cos(phiAtual) << ", "
                      << radius * cos(tetaAtual) << ", "
                      << radius * sin(tetaAtual) * sin(phiAtual) << "\n";
 
+            ficheiro << radius * sin(tetaAtual) * cos(phiNovo) << ", "
+                     << radius * cos(tetaAtual) << ", "
+                     << radius * sin(tetaAtual) * sin(phiNovo) << "\n";
+
             // Atualizar o Teta
-            tetaAtual = tetaNovo; tetaNovo += (2*M_PI/slices);
+            tetaAtual = tetaNovo; tetaNovo += (M_PI/slices);
         }
         // Atualizar o Phi
-        phiAtual = phiNovo; phiNovo += (M_PI/stacks);
+        phiAtual = phiNovo; phiNovo += (2*M_PI/stacks);
     }
 
     ficheiro.close();

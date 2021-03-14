@@ -52,10 +52,9 @@ void planesXY(std::ofstream& ficheiro, float x, float y, float z, int div) {
             ficheiro << xAtual << ", " << yAtual + (y/div) << ", " << zAtual << "\n";
 
             // Primeiro triângulo inverso
-
             ficheiro << xAtual << ", " << yAtual << ", " << -zAtual << "\n";
-            ficheiro << xAtual + (x/div) << ", " << yAtual << ", " << -zAtual << "\n";
             ficheiro << xAtual << ", " << yAtual + (y/div) << ", " << -zAtual << "\n";
+            ficheiro << xAtual + (x/div) << ", " << yAtual << ", " << -zAtual << "\n";
 
             // Segundo triângulo
             ficheiro << xAtual + (x/div) << ", " << yAtual << ", " << zAtual << "\n";
@@ -64,8 +63,8 @@ void planesXY(std::ofstream& ficheiro, float x, float y, float z, int div) {
 
             // Segundo triângulo inverso
             ficheiro << xAtual + (x/div) << ", " << yAtual << ", " << -zAtual << "\n";
-            ficheiro << xAtual + (x/div) << ", " << yAtual + (y/div)<< ", " << -zAtual << "\n";
             ficheiro << xAtual << ", " << yAtual + (y/div) << ", " << -zAtual << "\n";
+            ficheiro << xAtual + (x/div) << ", " << yAtual + (y/div)<< ", " << -zAtual << "\n";
 
 
             // Atualizar o xAtual
@@ -109,21 +108,18 @@ void planesYZ(std::ofstream& ficheiro, float x, float y, float z, int div) {
 
             // Primeiro triângulo inverso
             ficheiro << - xAtual << ", " << yAtual << ", " << zAtual << "\n";
-            ficheiro << - xAtual << ", " << yAtual << ", " << zAtual - (z/div) << "\n";
             ficheiro << - xAtual << ", " << yAtual + (y/div) << ", " << zAtual << "\n";
-
-
+            ficheiro << - xAtual << ", " << yAtual << ", " << zAtual - (z/div) << "\n";
 
             // Segundo triângulo
             ficheiro <<  xAtual << ", " << yAtual << ", " << zAtual - (z/div) << "\n";
             ficheiro <<  xAtual << ", " << yAtual + (y/div) << ", " << zAtual - (z/div) << "\n";
             ficheiro <<  xAtual << ", " << yAtual + (y/div) << ", " << zAtual << "\n";
 
-
             // Segundo triângulo inverso
             ficheiro <<  -xAtual << ", " << yAtual << ", " << zAtual - (z/div) << "\n";
-            ficheiro <<  -xAtual << ", " << yAtual + (y/div) << ", " << zAtual - (z/div) << "\n";
             ficheiro <<  -xAtual << ", " << yAtual + (y/div) << ", " << zAtual << "\n";
+            ficheiro <<  -xAtual << ", " << yAtual + (y/div) << ", " << zAtual - (z/div) << "\n";
 
             // Atualizar o zAtual
             zAtual -= (z/div);
@@ -166,22 +162,19 @@ void planesXZ(std::ofstream& ficheiro, float x, float y, float z, int div) {
             ficheiro <<  xAtual << ", " << yAtual << ", " << zAtual - (z/div) << "\n";
 
             // Primeiro triângulo inverso
-
             ficheiro <<  xAtual << ", " << -yAtual << ", " << zAtual  << "\n";
-            ficheiro <<  xAtual + (x/div) << ", " << -yAtual  << ", " << zAtual << "\n";
             ficheiro <<  xAtual << ", " << -yAtual << ", " << zAtual - (z/div) << "\n";
+            ficheiro <<  xAtual + (x/div) << ", " << -yAtual  << ", " << zAtual << "\n";
 
             // Segundo triângulo
             ficheiro <<  xAtual + (x/div) << ", " << yAtual << ", " << zAtual  << "\n";
             ficheiro <<  xAtual + (x/div) << ", " << yAtual  << ", " << zAtual - (z/div) << "\n";
             ficheiro <<  xAtual << ", " << yAtual << ", " << zAtual - (z/div) << "\n";
 
-
             // Segundo triângulo inverso
             ficheiro <<  xAtual + (x/div) << ", " << -yAtual << ", " << zAtual  << "\n";
+            ficheiro <<  xAtual << ", " << -yAtual << ", " << zAtual - (z/div) << "\n";
             ficheiro <<  xAtual + (x/div) << ", " << -yAtual  << ", " << zAtual - (z/div) << "\n";
-            ficheiro <<  xAtual << ", " << yAtual << ", " << -zAtual - (z/div) << "\n";
-
 
             // Atualizar o xAtual
             xAtual += (x/div);

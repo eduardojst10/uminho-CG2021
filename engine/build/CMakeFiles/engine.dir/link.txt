@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/engine.dir/engine.cpp.o CMakeFiles/engine.dir/scene.cpp.o CMakeFiles/engine.dir/model.cpp.o -o engine  /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libGLU.so /usr/lib/x86_64-linux-gnu/libglut.so 

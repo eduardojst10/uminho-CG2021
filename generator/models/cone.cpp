@@ -82,9 +82,9 @@ void cone(std::string file, float radius, float height, int slices, int stacks) 
         // C : (radius*cos(anguloAtual), radius*sin(anguloAtual), 0)
 
         //Triângulo ABC
-        ficheiro << x << ", " << y << ", " << z << "\n";
-        ficheiro << radius * cos(anguloNovo) << ", " << radius * sin(anguloNovo) << ", " << z << "\n";
-        ficheiro << radius * cos(anguloAtual) << ", " << radius * sin(anguloAtual) << ", " << z << "\n";
+        ficheiro << x << ", " << z << ", " << y << "\n";
+        ficheiro << radius * cos(anguloAtual) << ", " << z << ", " << radius * sin(anguloAtual) << "\n";
+        ficheiro << radius * cos(anguloNovo) << ", " << z << ", " << radius * sin(anguloNovo) << "\n";
 
         // atualização das variáveis
         anguloAtual = anguloNovo;
@@ -116,18 +116,30 @@ void cone(std::string file, float radius, float height, int slices, int stacks) 
             // D : (raioNovo*cos(anguloAtual), raioNovo*sin(anguloAtual), alturaNova)
 
             //Primeiro triângulo - ABC
-            ficheiro << raioAtual * cos(anguloAtual) << ", " << raioAtual * sin(anguloAtual) << ", " << alturaAtual
-                     << "\n";
-            ficheiro << raioAtual * cos(anguloNovo) << ", " << raioAtual * sin(anguloNovo) << ", " << alturaAtual
-                     << "\n";
-            ficheiro << raioNovo * cos(anguloNovo) << ", " << raioNovo * sin(anguloNovo) << ", " << alturaNova << "\n";
+            ficheiro << raioAtual * cos(anguloAtual) << ", " 
+                     << alturaAtual << ", "
+                     << raioAtual * sin(anguloAtual) << "\n";
+
+            ficheiro << raioNovo * cos(anguloNovo) << ", " 
+                     << alturaNova << ", " 
+                     << raioNovo * sin(anguloNovo) << "\n";
+
+            ficheiro << raioAtual * cos(anguloNovo) << ", " 
+                     << alturaAtual << ", "
+                     << raioAtual * sin(anguloNovo) << "\n";
 
             //Segundo triângulo
-            ficheiro << raioNovo * cos(anguloNovo) << ", " << raioNovo * sin(anguloNovo) << ", " << alturaNova << "\n";
-            ficheiro << raioNovo * cos(anguloAtual) << ", " << raioNovo * sin(anguloAtual) << ", " << alturaNova
-                     << "\n";
-            ficheiro << raioAtual * cos(anguloAtual) << ", " << raioAtual * sin(anguloAtual) << ", " << alturaAtual
-                     << "\n";
+            ficheiro << raioNovo * cos(anguloNovo) << ", " 
+                     << alturaNova << ", " 
+                     << raioNovo * sin(anguloNovo) << "\n";
+
+            ficheiro << raioAtual * cos(anguloAtual) << ", "
+                     << alturaAtual << ", "
+                     << raioAtual * sin(anguloAtual) << "\n";
+
+            ficheiro << raioNovo * cos(anguloAtual) << ", " 
+                     << alturaNova << ", "
+                     << raioNovo * sin(anguloAtual) << "\n";
 
             //Atualizar o ângulo
             anguloAtual = anguloNovo;
@@ -155,9 +167,15 @@ void cone(std::string file, float radius, float height, int slices, int stacks) 
         // C : (raioAtual*cos(anguloNovo), raioAtual*sin(anguloNovo), alturaAtual)
 
         //Triângulo - ABC
-        ficheiro << x << ", " << y << ", " << height << "\n";
-        ficheiro << raioAtual * cos(anguloAtual) << ", " << raioAtual * sin(anguloAtual) << ", " << alturaAtual << "\n";
-        ficheiro << raioAtual * cos(anguloNovo) << ", " << raioAtual * sin(anguloNovo) << ", " << alturaAtual << "\n";
+        ficheiro << x << ", " << height << ", " << z << "\n";
+
+        ficheiro << raioAtual * cos(anguloNovo) << ", " 
+                 << alturaAtual << ", " 
+                 << raioAtual * sin(anguloNovo) << "\n";
+
+        ficheiro << raioAtual * cos(anguloAtual) << ", "
+                 << alturaAtual << ", "
+                 << raioAtual * sin(anguloAtual)  << "\n";
 
         // atualização das variáveis
         anguloAtual = anguloNovo;

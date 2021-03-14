@@ -20,11 +20,7 @@
 #include "model.h"
 using namespace std;
 
-
 SCENE models_scene = NULL;
-
-
-
 
 void changeSize(int w, int h) {
 
@@ -56,7 +52,6 @@ void changeSize(int w, int h) {
  * @param modelo
  * @return
  */
-
 vector<vertice> fill_Model(string modelo){
     modelo = "../../FILES/" + modelo;
     vector<vertice> model;
@@ -107,9 +102,8 @@ vector<vertice> fill_Model(string modelo){
 /**
  * Função que de um vector de modelos(representados por string) nos dá uma SCENE que é o que vai ser apresentado no ecrã
  * @param modelos
- * @return
+ * @return struct scene
  */
-
 SCENE parse_All_models(vector<string> modelos){
     models_scene = init_scene();
     int i;
@@ -128,10 +122,8 @@ SCENE parse_All_models(vector<string> modelos){
 /**
  * Função que dá parse do ficheiro XML
  * @param file
- * @return
+ * @return vector<string>
 */
-
-
 vector<string> parseXml(const char* file) {
     TiXmlDocument doc(file);
     bool valido = doc.LoadFile();
@@ -164,7 +156,6 @@ vector<string> parseXml(const char* file) {
  * Função que faz loading do modelo a desenhar e escereve em memória os vértices deste
  * @param file
 */
-
 void execut(const char* file){
     models_scene = parse_All_models(parseXml(file));
 }
@@ -198,23 +189,12 @@ void renderScene(void) {
     glVertex3f(0.0f, 0.0f, 100.0f);
     glEnd();
 
-
-
-
-
     // put drawing instructions here
     draw_scene(models_scene);
 
     // End of frame
     glutSwapBuffers();
 }
-
-
-
-// write function to process keyboard events
-
-
-
 
 int main(int argc, char **argv) {
     std::cout << argv[1] <<"\n";
@@ -238,11 +218,6 @@ int main(int argc, char **argv) {
 // Required callback registry
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
-
-
-// put here the registration of the keyboard callbacks
-
-
 
 //  OpenGL settings
     glEnable(GL_DEPTH_TEST);

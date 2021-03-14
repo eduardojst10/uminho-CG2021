@@ -1,0 +1,3 @@
+/home/vasco/CG2021/generator/build/CMakeFiles/rebuild_cache.dir
+/home/vasco/CG2021/generator/build/CMakeFiles/generator.dir
+/home/vasco/CG2021/generator/build/CMakeFiles/edit_cache.dir
