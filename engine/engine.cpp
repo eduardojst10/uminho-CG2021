@@ -58,7 +58,7 @@ void changeSize(int w, int h) {
  */
 
 vector<vertice> fill_Model(string modelo){
-    modelo = "../files_draw/" + modelo;
+    modelo = "../../FILES/" + modelo;
     vector<vertice> model;
     ifstream file(modelo);
     string linha;
@@ -113,10 +113,8 @@ vector<vertice> fill_Model(string modelo){
 SCENE parse_All_models(vector<string> modelos){
     models_scene = init_scene();
     int i;
-    cout << modelos[0] << "\n";
     vector<vertice> pontos;
     for(i=0;i<modelos.size();i++){
-        cout << "aqui" << "\n";
         pontos = fill_Model(modelos[i]);
         MODEL m = init_model();
         add_Vertices(m,pontos);

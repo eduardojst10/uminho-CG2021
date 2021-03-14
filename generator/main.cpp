@@ -1,9 +1,12 @@
-#include <iostream>
 #include <vector>
 #include <string>
 #include <cstring>
+
 #include "models/plano.h"
+#include "models/cone.h"
+#include "models/sphere.h"
 #include "models/box.h"
+
 
 using namespace std;
 
@@ -37,9 +40,14 @@ int main(int argc, char** argv) {
             box(argv[6],atof(argv[2]),atof(argv[3]),atof(argv[4]),atof(argv[5]));
         }
 
-        if(strcmp(argv[1],"sphere")==0){}
+        if(strcmp(argv[1],"sphere")==0){
+                sphere(argv[5],atof(argv[2]),atoi(argv[3]),atoi(argv[4]));
+        }
 
-        if(strcmp(argv[1],"cone")==0){}
+        if(strcmp(argv[1],"cone")==0){
+            cone(argv[6],atof(argv[2]),atof(argv[3]),atoi(argv[4]),atoi(argv[5]));
+
+        }
     }else{
         cout << "Input não tem formato requerido" << "\n";
 

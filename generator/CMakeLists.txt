@@ -9,7 +9,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 
 
-add_executable(${PROJECT_NAME} main.cpp models/plano.cpp models/plano.h models/box.cpp models/box.h)
+add_executable(${PROJECT_NAME} main.cpp models/plano.cpp  models/box.cpp  models/sphere.cpp  models/cone.cpp )
 
 find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})

@@ -193,7 +193,7 @@ void planesXZ(std::ofstream& ficheiro, float x, float y, float z, int div) {
 }
 
 void box(std::string file, float x, float y, float z, int div) {
-    std::string path = "../files/" + file;
+    std::string path = "../../FILES/" + file;
 
     std::ofstream ficheiro;
     ficheiro.open(path);

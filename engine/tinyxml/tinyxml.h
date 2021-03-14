@@ -1274,7 +1274,7 @@ private:
 		<?xml version="1.0" standalone="yes"?>
 	@endverbatim
 
-	TinyXml will happily read or write files without a declaration,
+	TinyXml will happily read or write bazaina without a declaration,
 	however. There are 3 possible attributes to the declaration:
 	version, encoding, and standalone.
 

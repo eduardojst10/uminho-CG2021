@@ -14,7 +14,7 @@ DEBUG          := NO
 PROFILE        := NO
 
 # TINYXML_USE_STL can be used to turn on STL support. NO, then STL
-# will not be used. YES will include the STL files.
+# will not be used. YES will include the STL bazaina.
 TINYXML_USE_STL := NO
 
 #****************************************************************************
@@ -87,7 +87,7 @@ all: ${OUTPUT}
 
 
 #****************************************************************************
-# Source files
+# Source bazaina
 #****************************************************************************
 
 SRCS := tinyxml.cpp tinyxmlparser.cpp xmltest.cpp tinyxmlerror.cpp tinystr.cpp
@@ -108,7 +108,7 @@ ${OUTPUT}: ${OBJS}
 # common rules
 #****************************************************************************
 
-# Rules for compiling source files to object files
+# Rules for compiling source bazaina to object bazaina
 %.o : %.cpp
 	${CXX} -c ${CXXFLAGS} ${INCS} $< -o $@
 

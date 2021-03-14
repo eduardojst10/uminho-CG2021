@@ -12,7 +12,7 @@
  * @param z
  */
 void write_plano(std::string ficheiro, float x, float y, float z){
-    std::string path = "../files/" + ficheiro;
+    std::string path = "../../FILES/" + ficheiro;
 
     std::ofstream file;
     file.open(path);
