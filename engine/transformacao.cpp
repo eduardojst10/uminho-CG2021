@@ -148,14 +148,6 @@ TRANSFORMACAO escolheRotate(float x,float y, float z,float  angle) {
     }
 }
 
-TRANSFORMACAO rotation_time(double x, double y, double z, double time){
-    TRANSFORMACAO t = init_transformacao();
-    t->time = time;
-    t->matriz[0][0] = x;
-    t->matriz[0][1] = y;
-    t->matriz[0][2] = z;
-    return t;
-}
 
 TRANSFORMACAO translate_time(double time){
     TRANSFORMACAO t = init_transformacao();
@@ -165,15 +157,15 @@ TRANSFORMACAO translate_time(double time){
 }
 
 float * get_matrix(TRANSFORMACAO t) {
-    if (t->time > 0) return calc_curve(t);
+    if (t->time > 0) return calcula_curve(t);
     else return invert_order_matrix(t->matriz);
 }
 
-float * calc_curve(TRANSFORMACAO t) {
+float * calcula_curve(TRANSFORMACAO t) {
     float * r;
 
     if (t->pontos) r = calcula_catmull(t->time,t->pontos);
-    else r = calc_rotation_time(t);
+    else r = calcula_rotation_time(t);
 
     return r;
 }
@@ -188,7 +180,7 @@ float * invert_order_matrix(float m[4][4]){
     return r;
 }
 
-float * calc_rotation_time(TRANSFORMACAO t) {
+float * calcula_rotation_time(TRANSFORMACAO t) {
     float x = t->matriz[0][0];
     float y = t->matriz[0][1];
     float z = t->matriz[0][2];

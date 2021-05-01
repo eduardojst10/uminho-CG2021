@@ -23,12 +23,11 @@ TRANSFORMACAO rotateX(float x, float y,float z,float angle);
 TRANSFORMACAO rotateY(float x, float y,float z,float angle);
 TRANSFORMACAO rotateZ(float x, float y,float z,float angle);
 TRANSFORMACAO escolheRotate(float x,float y, float z,float  angle);
-TRANSFORMACAO rotation_time(double x, double y, double z, double time);
 TRANSFORMACAO translate_time(double time);
 float * get_matrix(TRANSFORMACAO t);
-float * calc_curve(TRANSFORMACAO t);
+float * calcula_curve(TRANSFORMACAO t);
 float * invert_order_matrix(float m[4][4]);
-float * calc_rotation_time(TRANSFORMACAO t);
+float * calcula_rotation_time(TRANSFORMACAO t);
 float to_radial(float angle);
 
 
