@@ -172,7 +172,7 @@ float * get_matrix(TRANSFORMACAO t) {
 float * calc_curve(TRANSFORMACAO t) {
     float * r;
 
-    if (t->pontos) r = calc_catmull(t->time,t->pontos);
+    if (t->pontos) r = calcula_catmull(t->time,t->pontos);
     else r = calc_rotation_time(t);
 
     return r;
@@ -194,22 +194,13 @@ float * calc_rotation_time(TRANSFORMACAO t) {
     float z = t->matriz[0][2];
     float angle = to_radial(glutGet(GLUT_ELAPSED_TIME) * 360.f / t->time);
     float aux[4][4];
+    TRANSFORMACAO ta = init_transformacao();
+    ta=escolheRotate(x,y,z,angle);
 
     for (int i = 0; i < 4; ++i)
         for (int j = 0; j < 4; ++j)
-            aux[i][j] = i == j ? 1 : 0;
-
-    aux[0][0] = pow(x,2) + (1 - pow(x,2)) * cos(angle);
-    aux[0][1] = x * y * (1 - cos(angle)) - z * sin(angle);
-    aux[0][2] = x * z * (1 -  cos(angle)) + y * sin(angle);
-
-    aux[1][0] = x * y * (1 - cos(angle)) + z * sin(angle);
-    aux[1][1] = pow(y,2) + (1 - pow(y,2)) * cos(angle);
-    aux[1][2] = y * z * (1 -  cos(angle)) - x * sin(angle);
-
-    aux[2][0] = x * z * (1 -  cos(angle)) - y * sin(angle);
-    aux[2][1] = y * z * (1 -  cos(angle)) + x * sin(angle);
-    aux[2][2] = pow(z,2) + (1 - pow(z,2)) * cos(angle);
+            aux[i][j]=ta->matriz[i][j];
+    
 
     return invert_order_matrix(aux);
 }

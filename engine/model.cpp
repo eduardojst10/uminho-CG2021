@@ -81,7 +81,7 @@ bool tem_Transformacoes(MODEL m){
  * Funcao que aplica todas as transformacoes a todos os vertices que o model tem
  * @param m
  */
-void aplica_transformacoes(MODEL m){
+void aplica_transformacoesm(MODEL m){
     //std::cout << m->transformacoes->size() << "\n";
     if(m->transformacoes->empty()) std::cout << "SEM TRANSFORMACOES" << "\n";
     else

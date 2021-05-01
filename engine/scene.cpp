@@ -27,7 +27,7 @@ void add_model(SCENE s, MODEL m) {
 
     }
 }
-void apply_transforms(MODEL g){
+void aplica_transformacoes(MODEL g){
     for (TRANSFORMACAO t: *(g->transformacoes)) {
         glMultMatrixf(get_matrix(t));
     }
@@ -43,7 +43,7 @@ void draw_scene(SCENE g){
     for(int i= 0; i<g->models->size();i++) {
         MODEL  m = g->models->at(i);
         if(tem_Transformacoes(m)) {
-          apply_transforms(m);
+          aplica_transformacoes(m);
         }
         draw_modelVBO(m);
     }

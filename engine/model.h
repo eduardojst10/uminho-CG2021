@@ -29,7 +29,7 @@ void add_Vertices(MODEL m, std::vector<VERTICE> v);
 void add_transformacao(MODEL m,std::vector<TRANSFORMACAO> t);
 bool tem_Transformacoes(MODEL m);
 void transforma_vertice(VERTICE v, TRANSFORMACAO t);
-void aplica_transformacoes(MODEL m);
+void aplica_transformacoesm(MODEL m);
 void drawModel(MODEL m);
 void printMatriz(TRANSFORMACAO t);
 void init_vbo_model(MODEL m);

@@ -16,7 +16,7 @@
 
 
 
-void cross(float *a, float *b, float *res) {
+void cruz(float *a, float *b, float *res) {
 
     res[0] = a[1] * b[2] - a[2] * b[1];
     res[1] = a[2] * b[0] - a[0] * b[2];
@@ -24,7 +24,7 @@ void cross(float *a, float *b, float *res) {
 }
 
 
-void normalize(float *a) {
+void normaliza(float *a) {
 
     float l = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
     a[0] = a[0] / l;
@@ -129,7 +129,7 @@ void renderCatmullRomCurve(std::vector<float> * v ) {
 }
 
 
-float * calc_catmull(float time, std::vector<float> * v) {
+float * calcula_catmull(float time, std::vector<float> * v) {
 
     renderCatmullRomCurve(v);
 
@@ -138,13 +138,13 @@ float * calc_catmull(float time, std::vector<float> * v) {
     float deriv[3];
     getGlobalCatmullRomPoint(glutGet(GLUT_ELAPSED_TIME) * 360.f / time, v, pos, deriv);
 
-    normalize(deriv);
+    normaliza(deriv);
 
     float derivCross[3];
-    cross(deriv, up, derivCross);
-    normalize(derivCross);
-    cross(derivCross, deriv, up);
-    normalize(up);
+    cruz(deriv, up, derivCross);
+    normaliza(derivCross);
+    cruz(derivCross, deriv, up);
+    normaliza(up);
 
     float m[4][4] = {{deriv[0],      deriv[1],      deriv[2],      0},
                      {up[0],         up[1],         up[2],         0},
