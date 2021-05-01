@@ -252,7 +252,7 @@ vector<MODEL> get_Models(vector<string> operacoes) {
  * @return vector<string>
 */
 
-vector<string> parseXml(const char *file) {
+vector<string> parseXml(const char* file) {
     TiXmlDocument doc(file);
     bool valido = doc.LoadFile();
     vector<string> res;
@@ -265,57 +265,74 @@ vector<string> parseXml(const char *file) {
         if (root) {
             TiXmlElement *group = root->FirstChildElement();
 
-            while (group) {
+            if(group) {
                 TiXmlElement *elem = group->FirstChildElement();
                 TiXmlElement *model;
 
-                while (true) {
+                while(true) {
                     if (elem) {
                         elemAtual = elem->Value();
                         if (elemAtual == "translate") {
                             tString = "translate:";
-                            if (elem->Attribute("X")) tString = tString + "X=" + elem->Attribute("X") + ",";
-                            else { tString = tString + "X=" + to_string(0) + ","; }
-                            if (elem->Attribute("Y")) tString = tString + "Y=" + elem->Attribute("Y") + ",";
-                            else { tString = tString + "Y=" + to_string(0) + ","; }
-                            if (elem->Attribute("Z")) tString = tString + "Z=" + elem->Attribute("Z");
-                            else { tString = tString + "Z=" + to_string(0); }
-                            tString = tString + ";";
-                            transforms.push_back(tString);
-                        } else if (elemAtual == "rotate") {
+                            if (elem->Attribute("time")) {
+                                tString = tString + "time=" + elem->Attribute("time") + ":";
+                                TiXmlElement * point = elem->FirstChildElement();
+                                while (point) {
+                                    tString = tString + "X=" + point->Attribute("X") + ",";
+                                    tString = tString + "Y=" + point->Attribute("Y") + ",";
+                                    tString = tString + "Z=" + point->Attribute("Z") + ":";
+                                    point = point->NextSiblingElement("point");
+                                }
+                                tString = tString + ";";
+                                transforms.push_back(tString);
+                            } else {
+                                if (elem->Attribute("X")) tString = tString + "X=" + elem->Attribute("X") + ",";
+                                else {tString = tString + "X=" + to_string(0) + ",";}
+                                if (elem->Attribute("Y")) tString = tString + "Y=" + elem->Attribute("Y") + ",";
+                                else {tString = tString + "Y=" + to_string(0) + ",";}
+                                if (elem->Attribute("Z")) tString = tString + "Z=" + elem->Attribute("Z");
+                                else {tString = tString + "Z=" + to_string(0);}
+                                tString = tString + ";";
+                                transforms.push_back(tString);
+                            }
+                        }
+                        else if (elemAtual == "rotate") {
                             tString = "rotate:";
                             if (elem->Attribute("angle")) tString = tString + "angle=" + elem->Attribute("angle") + ",";
+                            else if(elem->Attribute("time")) {tString = tString + "time=" + elem->Attribute("time") + ",";
                             if (elem->Attribute("axisX")) tString = tString + "X=" + elem->Attribute("axisX") + ",";
-                            else { tString = tString + "X=" + to_string(0) + ","; }
+                            else {tString = tString + "X=" + to_string(0) + ",";}
                             if (elem->Attribute("axisY")) tString = tString + "Y=" + elem->Attribute("axisY") + ",";
-                            else { tString = tString + "Y=" + to_string(0) + ","; }
+                            else {tString = tString + "Y=" + to_string(0) + ",";}
                             if (elem->Attribute("axisZ")) tString = tString + "Z=" + elem->Attribute("axisZ");
-                            else { tString = tString + "Z=" + to_string(0); }
+                            else {tString = tString + "Z=" + to_string(0);}
                             tString = tString + ";";
                             transforms.push_back(tString);
-                        } else if (elemAtual == "scale") {
+                        }
+                        else if (elemAtual == "scale") {
                             tString = "scale:";
                             if (elem->Attribute("X")) tString = tString + "X=" + elem->Attribute("X") + ",";
-                            else { tString = tString + "X=" + to_string(0) + ","; }
+                            else {tString = tString + "X=" + to_string(0) + ",";}
                             if (elem->Attribute("Y")) tString = tString + "Y=" + elem->Attribute("Y") + ",";
-                            else { tString = tString + "Y=" + to_string(0) + ","; }
+                            else {tString = tString + "Y=" + to_string(0) + ",";}
                             if (elem->Attribute("Z")) tString = tString + "Z=" + elem->Attribute("Z");
-                            else { tString = tString + "Z=" + to_string(0); }
+                            else {tString = tString + "Z=" + to_string(0);}
                             tString = tString + ";";
                             transforms.push_back(tString);
-                        } else if (elemAtual == "models") {
+                        }
+                        else if (elemAtual == "models") {
                             model = elem->FirstChildElement();
                             while (model) {
                                 tString = model->Attribute("file");
                                 tString = tString + ";";
-                                for (int i = 0; i < transforms.size(); i++) {
+                                for(int i = 0; i<transforms.size(); i++) {
                                     tString = tString + transforms[i];
                                 }
-                                tString.pop_back();
                                 res.push_back(tString);
                                 model = model->NextSiblingElement("model");
                             }
-                        } else if (elemAtual == "group") {
+                        }
+                        else if (elemAtual == "group") {
                             elem = elem->FirstChildElement();
                             continue;
                         }
@@ -323,15 +340,14 @@ vector<string> parseXml(const char *file) {
                         elem = elem->NextSiblingElement();
                     } else break;
                 }
-                transforms.clear();
-                group = group->NextSiblingElement();
             }
         }
-    } else {
+    }else{
         cout << "Erro a dar parse XML" << "\n";
     }
-    //for (int i = 0; i < res.size(); i++) cout << res[i] << "\n";
-    return res;
+    for (int i = 0; i<res.size(); i++) cout << res[i] << "\n";
+ }
+ return res;
 }
 
 /**
