@@ -1,4 +1,4 @@
-# Install script for directory: /home/vasco/CG2021/engine
+# Install script for directory: /home/andre/Desktop/Docs/ProjetoCG2021 fase 3/engine
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/vasco/CG2021/engine/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/andre/Desktop/Docs/ProjetoCG2021 fase 3/engine/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

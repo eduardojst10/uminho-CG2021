@@ -1,23 +1,98 @@
 <scene>
 
+    <!--SOL-->
     <group>
-        <color R="0.0" G="0.0" B="1.0" />
-        <rotate angle="130.0" axisX="0.0" axisY="1.0" axisZ="0.0" />
-        <translate X="0.0" Y="0.0" Z="-10.0" />
-        <scale X="0.0915" Y="0.0915" Z="0.0915" />
+        <translate X="0.0" Y="0.0" Z="0.0" />
+        <scale X="5.0" Y="5.0" Z="5.0" />
         <models>
             <model file="sphere.3d" />
         </models>
-        	            <!--LUA-->
-    	<group>
-        	<color R="1.0" G="1.0" B="1.0" />
-        	<rotate angle="90.0" axisX="0.0" axisY="1.0" axisZ="0.0" />
-        	<translate X="2.0" Y="0.0" Z="0.0" />
-        	<scale X="0.0649" Y="0.0649" Z="0.0649" />
-        	<models>
-            	<model file="sphere.3d" />
-        	</models>
-    	</group>
     </group>
 
+
+        <!--MERCURIO-->
+    <group>
+        <translate X="0.0" Y="0.0" Z="-35.0" />
+        <scale X="0.6" Y="0.6" Z="0.6" />
+        <models>
+            <model file="sphere.3d" />
+        </models>
+    </group>
+
+	 <!--VENUS-->
+    <group>
+        <translate X="40.00" Y="0.0" Z="0.00" />
+        <scale X="0.8" Y="0.8" Z="0.8" />
+        <rotate angle="30" axisX="0.0" axisY="1.0" axisZ="0.0" />
+        <models>
+            <model file="sphere.3d" />
+        </models>
+    </group>
+
+	 <!--TERRA-->
+    <group>
+        <translate X="0.0" Y="0.0" Z="-60.00" />
+        <scale X="1.0" Y="1.0" Z="1.0" />
+        <models>
+            <model file="sphere.3d" />
+        </models>
+		<!--LUA-->
+		<group>
+        <scale X="0.3" Y="0.3" Z="0.3" />
+        <translate X="0.0" Y="10.0" Z="-40.00" />
+        <models>
+            <model file="sphere.3d" />
+        </models>
+    </group>
+    </group>
+
+	    <!--MARTE-->
+    <group>
+        <translate X="0.0" Y="0.0" Z="74.0" />
+        <scale X="1.3" Y="1.3" Z="1.3" />
+        <models>
+            <model file="sphere.3d" />
+        </models>
+    </group>
+
+	    <!--JUPITER-->
+    <group>
+        <translate X="-80.80" Y="0.0" Z="0.0" />
+        <scale X="2.2" Y="2.2" Z="2.2" />
+        <rotate angle="160" axisX="0.0" axisY="1.0" axisZ="0.0" />
+        <models>
+            <model file="sphere.3d" />
+        </models>
+    </group>
+
+
+        <!--SATURNO-->
+    <group>
+        <translate X="100.0" Y="0.0" Z="0.0" />
+        <scale X="1.9" Y="1.9" Z="1.9" />
+        <rotate angle="160" axisX="0.0" axisY="1.0" axisZ="0.0" />
+        <models>
+            <model file="sphere.3d" />
+        </models>
+    </group>
+
+	    <!--URANO-->
+    <group>
+        <translate X="0.0" Y="0.0" Z="140.00" />
+        <scale X="1.4" Y="1.4" Z="1.4" />
+        <models>
+            <model file="sphere.3d" />
+        </models>
+    </group>
+
+	     <!--NEPTUNO-->
+    <group>
+
+        <translate X="0.0" Y="0.0" Z="-180.0" />
+        <scale X="1.3" Y="1.3" Z="1.3" />
+         <rotate angle="160" axisX="0.0" axisY="1.0" axisZ="0.0" />
+        <models>
+            <model file="sphere.3d" />
+        </models>
+    </group>
 </scene>

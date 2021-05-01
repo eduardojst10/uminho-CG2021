@@ -1,19 +1,19 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
-  "CXX"
   )
-# The set of files for implicit dependencies of each language:
-set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/vasco/CG2021/generator/main.cpp" "/home/vasco/CG2021/generator/build/CMakeFiles/generator.dir/main.cpp.o"
-  "/home/vasco/CG2021/generator/models/box.cpp" "/home/vasco/CG2021/generator/build/CMakeFiles/generator.dir/models/box.cpp.o"
-  "/home/vasco/CG2021/generator/models/cone.cpp" "/home/vasco/CG2021/generator/build/CMakeFiles/generator.dir/models/cone.cpp.o"
-  "/home/vasco/CG2021/generator/models/plano.cpp" "/home/vasco/CG2021/generator/build/CMakeFiles/generator.dir/models/plano.cpp.o"
-  "/home/vasco/CG2021/generator/models/sphere.cpp" "/home/vasco/CG2021/generator/build/CMakeFiles/generator.dir/models/sphere.cpp.o"
-  )
-set(CMAKE_CXX_COMPILER_ID "GNU")
 
-# The include file search paths:
-set(CMAKE_CXX_TARGET_INCLUDE_PATH
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/andre/Desktop/Docs/ProjetoCG2021 fase 3/generator/bezierPatch.cpp" "CMakeFiles/generator.dir/bezierPatch.cpp.o" "gcc" "CMakeFiles/generator.dir/bezierPatch.cpp.o.d"
+  "/home/andre/Desktop/Docs/ProjetoCG2021 fase 3/generator/main.cpp" "CMakeFiles/generator.dir/main.cpp.o" "gcc" "CMakeFiles/generator.dir/main.cpp.o.d"
+  "/home/andre/Desktop/Docs/ProjetoCG2021 fase 3/generator/models/box.cpp" "CMakeFiles/generator.dir/models/box.cpp.o" "gcc" "CMakeFiles/generator.dir/models/box.cpp.o.d"
+  "/home/andre/Desktop/Docs/ProjetoCG2021 fase 3/generator/models/cone.cpp" "CMakeFiles/generator.dir/models/cone.cpp.o" "gcc" "CMakeFiles/generator.dir/models/cone.cpp.o.d"
+  "/home/andre/Desktop/Docs/ProjetoCG2021 fase 3/generator/models/plano.cpp" "CMakeFiles/generator.dir/models/plano.cpp.o" "gcc" "CMakeFiles/generator.dir/models/plano.cpp.o.d"
+  "/home/andre/Desktop/Docs/ProjetoCG2021 fase 3/generator/models/sphere.cpp" "CMakeFiles/generator.dir/models/sphere.cpp.o" "gcc" "CMakeFiles/generator.dir/models/sphere.cpp.o.d"
   )
 
 # Targets to which this target links.

@@ -12,14 +12,27 @@
 #include <string>
 #include <vector>
 #include "engine.h"
+#include "transformacao.h"
 
 #ifndef GENERATOR_MODEL_H
 #define GENERATOR_MODEL_H
 
+struct model {
+    std::vector<VERTICE> * pontos;
+    std::vector<TRANSFORMACAO> * transformacoes;
+    GLuint vertexBuffer[1];
+};
 typedef struct model * MODEL;
 
 MODEL init_model();
-void add_Vertices(MODEL m, std::vector<vertice> v);
+void add_Vertices(MODEL m, std::vector<VERTICE> v);
+void add_transformacao(MODEL m,std::vector<TRANSFORMACAO> t);
+bool tem_Transformacoes(MODEL m);
+void transforma_vertice(VERTICE v, TRANSFORMACAO t);
+void aplica_transformacoes(MODEL m);
 void drawModel(MODEL m);
+void printMatriz(TRANSFORMACAO t);
+void init_vbo_model(MODEL m);
+void draw_modelVBO(MODEL m);
 
 #endif

@@ -1,7 +1,14 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/engine.dir/catmull.cpp.o"
+  "CMakeFiles/engine.dir/catmull.cpp.o.d"
   "CMakeFiles/engine.dir/engine.cpp.o"
+  "CMakeFiles/engine.dir/engine.cpp.o.d"
   "CMakeFiles/engine.dir/model.cpp.o"
+  "CMakeFiles/engine.dir/model.cpp.o.d"
   "CMakeFiles/engine.dir/scene.cpp.o"
+  "CMakeFiles/engine.dir/scene.cpp.o.d"
+  "CMakeFiles/engine.dir/transformacao.cpp.o"
+  "CMakeFiles/engine.dir/transformacao.cpp.o.d"
   "engine"
   "engine.pdb"
 )

@@ -6,7 +6,7 @@
 #include "models/cone.h"
 #include "models/sphere.h"
 #include "models/box.h"
-
+#include "bezierPatch.h"
 
 using namespace std;
 

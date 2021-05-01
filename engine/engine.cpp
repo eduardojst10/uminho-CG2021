@@ -5,7 +5,9 @@
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
+
 #include <GL/glut.h>
+
 #endif
 
 
@@ -18,15 +20,18 @@
 #include "engine.h"
 #include "scene.h"
 #include "model.h"
+#include "transformacao.h"
+
 using namespace std;
 
 SCENE models_scene = NULL;
+
 
 void changeSize(int w, int h) {
 
     // Prevent a divide by zero, when window is too short
     // (you cant make a window with zero width).
-    if(h == 0)
+    if (h == 0)
         h = 1;
 
     // compute window's aspect ratio
@@ -41,20 +46,18 @@ void changeSize(int w, int h) {
     glViewport(0, 0, w, h);
 
     // Set perspective
-    gluPerspective(45.0f ,ratio, 1.0f ,1000.0f);
+    gluPerspective(45.0f, ratio, 1.0f, 1000.0f);
 
     // return to the model view matrix mode
     glMatrixMode(GL_MODELVIEW);
 }
 
-/**
- * Função que vai ver o modelo e preencher o vector com os vértices, auxiliar de parse_All_models(vector<string> modelos)
- * @param modelo
- * @return
- */
-vector<vertice> fill_Model(string modelo){
+
+
+vector<VERTICE> fill_Model(string modelo){
     modelo = "../../FILES/" + modelo;
-    vector<vertice> model;
+    //cout << modelo << "\n";
+    vector<VERTICE> model;
     ifstream file(modelo);
     string linha;
     string token_del = ",";
@@ -63,30 +66,37 @@ vector<vertice> fill_Model(string modelo){
         getline(file,linha);
         nr_vertices = atoi(linha.c_str());//const char* to str
 
-        vertice v;
+
         while(getline(file,linha)){
-                //float x
-                pos = linha.find(token_del);
-                string coord_x = linha.substr(0,pos);
-                linha.erase(0, pos + token_del.length());
-                v.x = atof(coord_x.c_str());
+            VERTICE v = (VERTICE) malloc(sizeof(struct vertice));
+            //float x
+            pos = linha.find(token_del);
+            string coord_x = linha.substr(0,pos);
+            v->pontos[0] = atof(coord_x.c_str());
+            linha.erase(0, pos + token_del.length());
 
 
-                //float y
-                pos = linha.find(token_del);
-                string coord_y = linha.substr(0,pos);
-                linha.erase(0, pos + token_del.length());
-                v.y = atof(coord_y.c_str());
 
 
-                //float z
-                pos = linha.find(token_del);
-                string coord_z = linha.substr(0,pos);
-                linha.erase(0, pos + token_del.length());
-                v.z = atof(coord_z.c_str());
+            //float y
+            pos = linha.find(token_del);
+            string coord_y = linha.substr(0,pos);
+            v->pontos[1] = atof(coord_y.c_str());
+            linha.erase(0, pos + token_del.length());
 
 
-                model.push_back(v);
+
+            //float z
+            pos = linha.find(token_del);
+            string coord_z = linha.substr(0,pos);
+            v->pontos[2] = atof(coord_z.c_str());
+            linha.erase(0, pos + token_del.length());
+
+            v->pontos[3] = 1.0;
+
+            //cout << v->pontos[0] << "," << v->pontos[1] << "," << v->pontos[2] << "," << v->pontos[3] << endl;
+
+            model.push_back(v);
         }
 
     }else {
@@ -100,23 +110,140 @@ vector<vertice> fill_Model(string modelo){
 
 
 /**
- * Função que de um vector de modelos(representados por string) nos dá uma SCENE que é o que vai ser apresentado no ecrã
- * @param modelos
- * @return struct scene
+ * Função que vai ver o modelo e preencher o vector com os vértices, auxiliar de parse_All_models(vector<string> modelos)
+ * @param modelo
+ * @return
  */
-SCENE parse_All_models(vector<string> modelos){
-    models_scene = init_scene();
-    int i;
-    vector<vertice> pontos;
-    for(i=0;i<modelos.size();i++){
-        pontos = fill_Model(modelos[i]);
-        MODEL m = init_model();
-        add_Vertices(m,pontos);
-        add_model(models_scene,m);
-    }
 
-    return models_scene;
+//operacao --> ”cone.3d”;translate:X=1,Y=0,Z=0;translate:X=0,Y=1,Z=0;
+//        s --> translate:X=1,Y=0,Z=0;translate:X=0,Y=1,Z=0;
+
+
+vector<MODEL> get_Models(vector<string> operacoes) {
+    vector<MODEL> modelos;
+
+    for (string str: operacoes) {
+        MODEL mo = init_model();
+        cout << str << "\n";
+
+        //TRATAMENTO DO FILE .3D
+        char *modelo, *campos;
+        char *op = &str[0];
+        modelo = strsep(&op, ";");
+
+
+        std::string modelo_str = modelo;
+        vector<VERTICE> vertices_modelo = fill_Model(modelo_str);
+
+
+
+        if (vertices_modelo.empty()) cout << "FILE EMPTY" << endl; //SE O FICHEIRO EXISTIR
+        add_Vertices(mo, vertices_modelo);
+
+
+        vector<char *> transformacao; //translate:X=1,Y=0,Z=0
+        while ((campos = strsep(&op, ";")) != NULL) {
+            transformacao.push_back(campos);
+
+        }
+
+        vector<TRANSFORMACAO> transformacoes;
+        //para cada transformacao
+
+        for(char* s: transformacao){
+
+            char* tipo_transformacao = strdup(strsep(&s,":"));
+            char *sl;
+            TRANSFORMACAO t = init_transformacao();
+            if(strcmp(tipo_transformacao,"translate")==0){
+                vector<std::string> tokens;
+                while ((sl = strsep(&s,","))){// X = 1 OU Y = 0 OU Z = 0
+                    char *coef = strdup(sl);
+                    std::string str(coef);
+                    // Vector of string to save tokens
+
+                    // stringstream class check1
+                    std::stringstream check1(coef);
+                    std::string intermediate;
+
+                    // Tokenizing w.r.t. space '='
+                    while(getline(check1, intermediate, '=')){
+                        tokens.push_back(intermediate);
+
+
+                    }
+                }
+                t = translate(atof(tokens[1].c_str()),atof(tokens[3].c_str()),atof(tokens[5].c_str()));
+                //printMatriz(t);
+
+            }
+
+            if(strcmp(tipo_transformacao,"rotate")==0){
+                vector<std::string> tokens;
+
+                while ((sl = strsep(&s,","))){
+
+
+                    char *coef = strdup(sl);
+                    std::string str(coef);
+                    // Vector of string to save tokens
+
+                    // stringstream class check1
+                    std::stringstream check1(coef);
+                    std::string intermediate;
+
+                    // Tokenizing w.r.t. space '='
+                    while(getline(check1, intermediate, '=')){
+                        tokens.push_back(intermediate);
+
+
+                    }
+
+                }
+
+                t = escolheRotate(atof(tokens[3].c_str()),atof(tokens[5].c_str()),atof(tokens[7].c_str()),atof(tokens[1].c_str()));
+                //printMatriz(t);
+            }
+
+            if(strcmp(tipo_transformacao,"scale")==0){
+                vector<std::string> tokens;
+
+                while ((sl = strsep(&s,","))){
+                    char *coef = strdup(sl);
+                    std::string str(coef);
+                    // Vector of string to save tokens
+
+                    // stringstream class check1
+                    std::stringstream check1(coef);
+                    std::string intermediate;
+
+                    // Tokenizing w.r.t. space '='
+                    while(getline(check1, intermediate, '=')){
+                        tokens.push_back(intermediate);
+                    }
+                }
+                t = scale(atof(tokens[1].c_str()),atof(tokens[3].c_str()),atof(tokens[3].c_str()));
+                //printMatriz(t);
+            }
+            transformacoes.push_back(t);
+
+        }
+
+
+
+
+        add_transformacao(mo,transformacoes);
+
+
+
+
+        //CADA STRING UMA OPERACAO
+        modelos.push_back(mo);
+
+    }
+    return modelos;
 }
+
 
 
 /**
@@ -124,42 +251,110 @@ SCENE parse_All_models(vector<string> modelos){
  * @param file
  * @return vector<string>
 */
-vector<string> parseXml(const char* file) {
+
+vector<string> parseXml(const char *file) {
     TiXmlDocument doc(file);
     bool valido = doc.LoadFile();
     vector<string> res;
+    string elemAtual;
+    vector<string> transforms;
+    string tString;
+
     if (valido) {
         TiXmlElement *root = doc.FirstChildElement("scene");
         if (root) {
-            TiXmlElement *model = root->FirstChildElement("model");
-            if (model) {
-                //needs further testing
-                res.push_back(model->Attribute("file"));
+            TiXmlElement *group = root->FirstChildElement();
 
-                TiXmlElement *nextModel = model->NextSiblingElement("model");
+            while (group) {
+                TiXmlElement *elem = group->FirstChildElement();
+                TiXmlElement *model;
 
-                while (nextModel) {
-                    model = nextModel;
-                    nextModel = model->NextSiblingElement("model");
-                    res.push_back(model->Attribute("file"));
+                while (true) {
+                    if (elem) {
+                        elemAtual = elem->Value();
+                        if (elemAtual == "translate") {
+                            tString = "translate:";
+                            if (elem->Attribute("X")) tString = tString + "X=" + elem->Attribute("X") + ",";
+                            else { tString = tString + "X=" + to_string(0) + ","; }
+                            if (elem->Attribute("Y")) tString = tString + "Y=" + elem->Attribute("Y") + ",";
+                            else { tString = tString + "Y=" + to_string(0) + ","; }
+                            if (elem->Attribute("Z")) tString = tString + "Z=" + elem->Attribute("Z");
+                            else { tString = tString + "Z=" + to_string(0); }
+                            tString = tString + ";";
+                            transforms.push_back(tString);
+                        } else if (elemAtual == "rotate") {
+                            tString = "rotate:";
+                            if (elem->Attribute("angle")) tString = tString + "angle=" + elem->Attribute("angle") + ",";
+                            if (elem->Attribute("axisX")) tString = tString + "X=" + elem->Attribute("axisX") + ",";
+                            else { tString = tString + "X=" + to_string(0) + ","; }
+                            if (elem->Attribute("axisY")) tString = tString + "Y=" + elem->Attribute("axisY") + ",";
+                            else { tString = tString + "Y=" + to_string(0) + ","; }
+                            if (elem->Attribute("axisZ")) tString = tString + "Z=" + elem->Attribute("axisZ");
+                            else { tString = tString + "Z=" + to_string(0); }
+                            tString = tString + ";";
+                            transforms.push_back(tString);
+                        } else if (elemAtual == "scale") {
+                            tString = "scale:";
+                            if (elem->Attribute("X")) tString = tString + "X=" + elem->Attribute("X") + ",";
+                            else { tString = tString + "X=" + to_string(0) + ","; }
+                            if (elem->Attribute("Y")) tString = tString + "Y=" + elem->Attribute("Y") + ",";
+                            else { tString = tString + "Y=" + to_string(0) + ","; }
+                            if (elem->Attribute("Z")) tString = tString + "Z=" + elem->Attribute("Z");
+                            else { tString = tString + "Z=" + to_string(0); }
+                            tString = tString + ";";
+                            transforms.push_back(tString);
+                        } else if (elemAtual == "models") {
+                            model = elem->FirstChildElement();
+                            while (model) {
+                                tString = model->Attribute("file");
+                                tString = tString + ";";
+                                for (int i = 0; i < transforms.size(); i++) {
+                                    tString = tString + transforms[i];
+                                }
+                                tString.pop_back();
+                                res.push_back(tString);
+                                model = model->NextSiblingElement("model");
+                            }
+                        } else if (elemAtual == "group") {
+                            elem = elem->FirstChildElement();
+                            continue;
+                        }
+
+                        elem = elem->NextSiblingElement();
+                    } else break;
                 }
+                transforms.clear();
+                group = group->NextSiblingElement();
             }
         }
-    }else{
-        std::cout << "Erro a dar parse XML" << "\n";
+    } else {
+        cout << "Erro a dar parse XML" << "\n";
     }
+    //for (int i = 0; i < res.size(); i++) cout << res[i] << "\n";
     return res;
 }
 
+/**
+ * Função que de um vector de modelos(representados por string) nos dá uma SCENE que é o que vai ser apresentado no ecrã
+ * @param modelos
+ * @return struct scene
+ */
+SCENE fill_Scene(vector<MODEL> modelos) {
+    models_scene = init_scene();
+    for (MODEL m: modelos) {
+        add_model(models_scene, m);
+    }
+
+    return models_scene;
+}
 
 /**
  * Função que faz loading do modelo a desenhar e escereve em memória os vértices deste
  * @param file
 */
-void execut(const char* file){
-    models_scene = parse_All_models(parseXml(file));
+void execut(const char *file) {
+    models_scene = fill_Scene(get_Models(parseXml(file)));
 }
-
 
 
 void renderScene(void) {
@@ -169,24 +364,24 @@ void renderScene(void) {
 
     // set the camera
     glLoadIdentity();
-    gluLookAt(5.0,5.0,5.0,
-              0.0,0.0,0.0,
-              0.0f,1.0f,0.0f);
+    gluLookAt(300.0f, 300.0f, 300.0f,
+              0.0, 0.0, 0.0,
+              0.0f, 1.0f, 0.0f);
 
     //Eixos
     glBegin(GL_LINES);
     // X axis in red
     glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(-100.0f, 0.0f, 0.0f);
-    glVertex3f( 100.0f, 0.0f, 0.0f);
+    glVertex3f(-1000.0f, 0.0f, 0.0f);
+    glVertex3f(1000.0f, 0.0f, 0.0f);
     // Y Axis in Green
     glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(0.0f, -100.0f, 0.0f);
-    glVertex3f(0.0f, 100.0f, 0.0f);
+    glVertex3f(0.0f, -1000.0f, 0.0f);
+    glVertex3f(0.0f, 1000.0f, 0.0f);
     // Z Axis in Blue
     glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0f, 0.0f, -100.0f);
-    glVertex3f(0.0f, 0.0f, 100.0f);
+    glVertex3f(0.0f, 0.0f, -1000.0f);
+    glVertex3f(0.0f, 0.0f, 1000.0f);
     glEnd();
 
     // put drawing instructions here
@@ -196,11 +391,13 @@ void renderScene(void) {
     glutSwapBuffers();
 }
 
+
+
 int main(int argc, char **argv) {
-    std::cout << argv[1] <<"\n";
+    //std::cout << argv[1] << "\n";
 
 
-    if(argc>1) execut(argv[1]);
+    if (argc > 1) execut(argv[1]);
 
 
     //vector<string> s1 = parseXml(argv[1]);
@@ -208,9 +405,9 @@ int main(int argc, char **argv) {
 
 // init GLUT and the window
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
-    glutInitWindowPosition(100,100);
-    glutInitWindowSize(800,800);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+    glutInitWindowPosition(100, 100);
+    glutInitWindowSize(800, 800);
     glutCreateWindow("CG@DI-UM");
 
     //if (argc > 1) execut(argv[1]);
@@ -218,6 +415,9 @@ int main(int argc, char **argv) {
 // Required callback registry
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
+
+
+
 
 //  OpenGL settings
     glEnable(GL_DEPTH_TEST);
