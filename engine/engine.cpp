@@ -401,6 +401,9 @@ void renderScene(void) {
     glEnd();
 
     // put drawing instructions here
+
+    glPolygonMode(GL_FRONT, GL_LINE);  
+    glColor3f(1,1,1);
     draw_scene(models_scene);
 
     // End of frame
@@ -431,6 +434,7 @@ int main(int argc, char **argv) {
 // Required callback registry
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
+    glutIdleFunc(renderScene);
 
 
 
