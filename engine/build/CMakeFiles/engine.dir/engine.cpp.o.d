@@ -1,8 +1,7 @@
 CMakeFiles/engine.dir/engine.cpp.o: \
  /home/andre/Desktop/Docs/ProjetoCG2021\ fase\ 3/engine/engine.cpp \
- /usr/include/stdc-predef.h /usr/include/GL/glut.h \
- /usr/include/GL/freeglut_std.h /usr/include/GL/gl.h \
- /usr/include/GL/glext.h /usr/include/KHR/khrplatform.h \
+ /usr/include/stdc-predef.h /usr/include/GL/glew.h \
+ /usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h \
  /usr/lib/gcc/x86_64-linux-gnu/9/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
@@ -17,12 +16,13 @@ CMakeFiles/engine.dir/engine.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h /usr/include/GL/glu.h \
- /usr/include/c++/9/stdlib.h /usr/include/c++/9/cstdlib \
+ /usr/include/GL/gl.h /usr/include/GL/glut.h \
+ /usr/include/GL/freeglut_std.h /usr/include/c++/9/stdlib.h \
+ /usr/include/c++/9/cstdlib \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/os_defines.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/cpu_defines.h \
- /usr/include/stdlib.h /usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h \
- /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+ /usr/include/stdlib.h /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
  /usr/include/x86_64-linux-gnu/bits/floatn.h \
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
@@ -177,4 +177,5 @@ CMakeFiles/engine.dir/engine.cpp.o: \
  /usr/include/c++/9/sstream /usr/include/c++/9/bits/sstream.tcc \
  /home/andre/Desktop/Docs/ProjetoCG2021\ fase\ 3/engine/scene.h \
  /home/andre/Desktop/Docs/ProjetoCG2021\ fase\ 3/engine/model.h \
- /home/andre/Desktop/Docs/ProjetoCG2021\ fase\ 3/engine/transformacao.h
+ /home/andre/Desktop/Docs/ProjetoCG2021\ fase\ 3/engine/transformacao.h \
+ /home/andre/Desktop/Docs/ProjetoCG2021\ fase\ 3/engine/catmull.h

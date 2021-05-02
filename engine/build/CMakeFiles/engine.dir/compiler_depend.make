@@ -125,15 +125,14 @@ CMakeFiles/engine.dir/catmull.cpp.o: ../catmull.cpp \
   /usr/include/c++/9/bits/stl_bvector.h \
   /usr/include/c++/9/bits/functional_hash.h \
   /usr/include/c++/9/bits/range_access.h \
-  /usr/include/c++/9/bits/vector.tcc
+  /usr/include/c++/9/bits/vector.tcc \
+  ../catmull.h \
+  ../transformacao.h
 
 CMakeFiles/engine.dir/engine.cpp.o: ../engine.cpp \
   /usr/include/stdc-predef.h \
-  /usr/include/GL/glut.h \
-  /usr/include/GL/freeglut_std.h \
-  /usr/include/GL/gl.h \
-  /usr/include/GL/glext.h \
-  /usr/include/KHR/khrplatform.h \
+  /usr/include/GL/glew.h \
+  /usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/9/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -151,13 +150,15 @@ CMakeFiles/engine.dir/engine.cpp.o: ../engine.cpp \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/GL/glu.h \
+  /usr/include/GL/gl.h \
+  /usr/include/GL/glut.h \
+  /usr/include/GL/freeglut_std.h \
   /usr/include/c++/9/stdlib.h \
   /usr/include/c++/9/cstdlib \
   /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
   /usr/include/x86_64-linux-gnu/c++/9/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/c++/9/bits/cpu_defines.h \
   /usr/include/stdlib.h \
-  /usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
@@ -354,7 +355,8 @@ CMakeFiles/engine.dir/engine.cpp.o: ../engine.cpp \
   /usr/include/c++/9/bits/sstream.tcc \
   ../scene.h \
   ../model.h \
-  ../transformacao.h
+  ../transformacao.h \
+  ../catmull.h
 
 CMakeFiles/engine.dir/model.cpp.o: ../model.cpp \
   /usr/include/stdc-predef.h \
@@ -993,11 +995,7 @@ CMakeFiles/engine.dir/transformacao.cpp.o: ../transformacao.cpp \
   /usr/include/c++/9/bits/istream.tcc
 
 
-../catmull.h:
-
 ../scene.cpp:
-
-/usr/include/GL/glew.h:
 
 ../model.h:
 
@@ -1070,6 +1068,12 @@ CMakeFiles/engine.dir/transformacao.cpp.o: ../transformacao.cpp \
 /usr/include/sched.h:
 
 /usr/include/x86_64-linux-gnu/c++/9/bits/gthr-default.h:
+
+/usr/include/c++/9/ext/atomicity.h:
+
+/usr/include/c++/9/bits/ios_base.h:
+
+/usr/include/c++/9/cctype:
 
 /usr/include/GL/glu.h:
 
@@ -1405,6 +1409,10 @@ CMakeFiles/engine.dir/transformacao.cpp.o: ../transformacao.cpp \
 
 /usr/include/c++/9/bits/functional_hash.h:
 
+../catmull.h:
+
+/usr/include/GL/glew.h:
+
 ../tinyxml/tinyxml.cpp:
 
 /usr/include/c++/9/bits/streambuf.tcc:
@@ -1450,9 +1458,3 @@ CMakeFiles/engine.dir/transformacao.cpp.o: ../transformacao.cpp \
 /usr/include/c++/9/bits/postypes.h:
 
 /usr/include/locale.h:
-
-/usr/include/c++/9/cctype:
-
-/usr/include/c++/9/bits/ios_base.h:
-
-/usr/include/c++/9/ext/atomicity.h:

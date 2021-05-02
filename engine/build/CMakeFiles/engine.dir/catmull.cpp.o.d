@@ -102,4 +102,6 @@ CMakeFiles/engine.dir/catmull.cpp.o: \
  /usr/include/c++/9/bits/stl_bvector.h \
  /usr/include/c++/9/bits/functional_hash.h \
  /usr/include/c++/9/bits/range_access.h \
- /usr/include/c++/9/bits/vector.tcc
+ /usr/include/c++/9/bits/vector.tcc \
+ /home/andre/Desktop/Docs/ProjetoCG2021\ fase\ 3/engine/catmull.h \
+ /home/andre/Desktop/Docs/ProjetoCG2021\ fase\ 3/engine/transformacao.h

@@ -205,3 +205,29 @@ float * calcula_rotation_time(TRANSFORMACAO t) {
 float to_radial(float angle) {
     return angle / 360.f * M_PI * 2;
 }
+
+float * calcula_tempo(TRANSFORMACAO t) {
+    float x = t->matriz[0][0];
+    float y = t->matriz[0][1];
+    float z = t->matriz[0][2];
+    float angle = (glutGet(GLUT_ELAPSED_TIME) * 360.f / t->time) /360.f * M_PI * 2;
+    float aux[4][4];
+    TRANSFORMACAO ta = init_transformacao();
+    ta=escolheRotate(x,y,z,angle);
+
+    for (int i = 0; i < 4; ++i)
+        for (int j = 0; j < 4; ++j)
+            aux[i][j]=ta->matriz[i][j];
+
+
+    return invert_order_matrix(aux);
+}
+
+TRANSFORMACAO rotation_time(double x, double y, double z, double time){
+    TRANSFORMACAO t = init_transformacao();
+    t->time = time;
+    t->matriz[0][0] = x;
+    t->matriz[0][1] = y;
+    t->matriz[0][2] = z;
+    return t;
+}

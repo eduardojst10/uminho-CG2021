@@ -6,6 +6,7 @@
 #include <GLUT/glut.h>
 #else
 
+#include <GL/glew.h>
 #include <GL/glut.h>
 
 #endif
@@ -21,6 +22,7 @@
 #include "scene.h"
 #include "model.h"
 #include "transformacao.h"
+#include "catmull.h"
 
 using namespace std;
 
@@ -137,7 +139,7 @@ vector<MODEL> get_Models(vector<string> operacoes) {
 
 
 
-        if (vertices_modelo.empty()) cout << "FILE EMPTY" << endl; //SE O FICHEIRO EXISTIR
+        if (vertices_modelo.empty()) cout << "FILE EMPTY" << endl; //SE O FICHEIRO NAO EXISTIR
         add_Vertices(mo, vertices_modelo);
 
 
@@ -150,32 +152,91 @@ vector<MODEL> get_Models(vector<string> operacoes) {
         vector<TRANSFORMACAO> transformacoes;
         //para cada transformacao
 
+        //”cone.3d”;translate:time=10:X=0,Y=1,Z=0:X=1,Y=2,Z=3:;translate:X=0,Y=1,Z=0;
         for(char* s: transformacao){
 
             char* tipo_transformacao = strdup(strsep(&s,":"));
             char *sl;
             TRANSFORMACAO t = init_transformacao();
+
             if(strcmp(tipo_transformacao,"translate")==0){
-                vector<std::string> tokens;
-                while ((sl = strsep(&s,","))){// X = 1 OU Y = 0 OU Z = 0
-                    char *coef = strdup(sl);
-                    std::string str(coef);
-                    // Vector of string to save tokens
+                char* als;
 
-                    // stringstream class check1
-                    std::stringstream check1(coef);
-                    std::string intermediate;
+                vector<std::string> times;
+                vector<std::string> points;
+                while((als = strsep(&s,":"))) {
+                    char* t = strsep(&als,"=");
+                    if (strcmp(t,"time")==0) {//time=10
+                        char *coef = strdup(als);
+                        std::string str(coef);
+                        // Vector of string to save tokens
 
-                    // Tokenizing w.r.t. space '='
-                    while(getline(check1, intermediate, '=')){
-                        tokens.push_back(intermediate);
+                        // stringstream class check1
+                        std::stringstream check1(coef);
+                        std::string intermediate;
 
+                        // Tokenizing w.r.t. space '='
+                        while (getline(check1, intermediate, '=')) {
+                            times.push_back(intermediate);
+                        }
+                        //Get Points de catmull
+                        char* pts;
+                        while ((pts = strsep(&als,","))) { // X = 1 OU Y = 0 OU Z = 0
+                            char *coef = strdup(pts);
+                            std::string str(coef);
+                            // Vector of string to save tokens
+
+                            // stringstream class check1
+                            std::stringstream check1(coef);
+                            std::string intermediate;
+
+                            // Tokenizing w.r.t. space '='
+                            while (getline(check1, intermediate, '=')) {
+                                points.push_back(intermediate);
+                            }
+                        }
+
+
+                    }else{ // normal
+                        char* pts;
+                        while ((pts = strsep(&als,","))) { // X = 1 OU Y = 0 OU Z = 0
+                            char *coef = strdup(pts);
+                            std::string str(coef);
+                            // Vector of string to save tokens
+
+                            // stringstream class check1
+                            std::stringstream check1(coef);
+                            std::string intermediate;
+
+                            // Tokenizing w.r.t. space '='
+                            while (getline(check1, intermediate, '=')) {
+                                points.push_back(intermediate);
+                            }
+                        }
 
                     }
                 }
-                t = translate(atof(tokens[1].c_str()),atof(tokens[3].c_str()),atof(tokens[5].c_str()));
-                //printMatriz(t);
 
+                if(!times.empty()){ //CASO O TIME > 0
+                    float tempo = atof(times[1].c_str());
+                    t = translate_time(tempo);
+                    vector<float> pontos;
+                    //vou buscar os pontos
+                    for(int i = 0 ; i < points.size();i++){
+                        if((i % 2) == 1){
+                            pontos.push_back(atof(points[i].c_str()));
+                        }
+                    }
+
+                    //adiciono-os à transformacao
+                    for(int i=0; i<pontos.size();i+3){
+                        add_points_catmull(t,pontos.at(i),pontos.at(i+1),pontos.at(i+2));
+                    }
+
+                }else {
+                    t = translate(atof(points[3].c_str()), atof(points[5].c_str()), atof(points[7].c_str()));
+                    //printMatriz(t);
+                }
             }
 
             if(strcmp(tipo_transformacao,"rotate")==0){
@@ -195,14 +256,20 @@ vector<MODEL> get_Models(vector<string> operacoes) {
                     // Tokenizing w.r.t. space '='
                     while(getline(check1, intermediate, '=')){
                         tokens.push_back(intermediate);
-
-
                     }
 
                 }
 
-                t = escolheRotate(atof(tokens[3].c_str()),atof(tokens[5].c_str()),atof(tokens[7].c_str()),atof(tokens[1].c_str()));
-                //printMatriz(t);
+                if(strcmp(tokens[0].c_str(),"time")==0){
+                    //calcula rotation_time
+                    t = rotation_time(atof(tokens[3].c_str()), atof(tokens[5].c_str()), atof(tokens[7].c_str()),
+                                       atof(tokens[1].c_str()));
+                }else {
+
+                    t = escolheRotate(atof(tokens[3].c_str()), atof(tokens[5].c_str()), atof(tokens[7].c_str()),
+                                      atof(tokens[1].c_str()));
+                    //printMatriz(t);
+                }
             }
 
             if(strcmp(tipo_transformacao,"scale")==0){
@@ -226,20 +293,10 @@ vector<MODEL> get_Models(vector<string> operacoes) {
                 //printMatriz(t);
             }
             transformacoes.push_back(t);
-
         }
-
-
-
-
         add_transformacao(mo,transformacoes);
-
-
-
-
         //CADA STRING UMA OPERACAO
         modelos.push_back(mo);
-
     }
     return modelos;
 }
@@ -252,7 +309,7 @@ vector<MODEL> get_Models(vector<string> operacoes) {
  * @return vector<string>
 */
 
-vector<string> parseXml(const char* file) {
+vector<string> parseXml(const char *file) {
     TiXmlDocument doc(file);
     bool valido = doc.LoadFile();
     vector<string> res;
@@ -265,74 +322,75 @@ vector<string> parseXml(const char* file) {
         if (root) {
             TiXmlElement *group = root->FirstChildElement();
 
-            if(group) {
+            while (group) {
                 TiXmlElement *elem = group->FirstChildElement();
                 TiXmlElement *model;
 
-                while(true) {
+                while (true) {
                     if (elem) {
                         elemAtual = elem->Value();
                         if (elemAtual == "translate") {
                             tString = "translate:";
                             if (elem->Attribute("time")) {
                                 tString = tString + "time=" + elem->Attribute("time") + ":";
-                                TiXmlElement * point = elem->FirstChildElement();
-                                while (point) {
-                                    tString = tString + "X=" + point->Attribute("X") + ",";
-                                    tString = tString + "Y=" + point->Attribute("Y") + ",";
-                                    tString = tString + "Z=" + point->Attribute("Z") + ":";
-                                    point = point->NextSiblingElement("point");
+                                // start reading the points
+                                TiXmlElement *point = elem->FirstChildElement();
+                                while(point) {
+                                    if (point->Attribute("X")) tString = tString + "X=" + point->Attribute("X") + ",";
+                                    else { tString = tString + "X=" + to_string(0) + ","; }
+                                    if (point->Attribute("Y")) tString = tString + "Y=" + point->Attribute("Y") + ",";
+                                    else { tString = tString + "Y=" + to_string(0) + ","; }
+                                    if (point->Attribute("Z")) tString = tString + "Z=" + point->Attribute("Z") + ":";
+                                    else { tString = tString + "Z=" + to_string(0) + ":";}
+                                    point = point->NextSiblingElement();
                                 }
-                                tString = tString + ";";
-                                transforms.push_back(tString);
                             } else {
+                                // read a point
                                 if (elem->Attribute("X")) tString = tString + "X=" + elem->Attribute("X") + ",";
-                                else {tString = tString + "X=" + to_string(0) + ",";}
+                                else { tString = tString + "X=" + to_string(0) + ","; }
                                 if (elem->Attribute("Y")) tString = tString + "Y=" + elem->Attribute("Y") + ",";
-                                else {tString = tString + "Y=" + to_string(0) + ",";}
+                                else { tString = tString + "Y=" + to_string(0) + ","; }
                                 if (elem->Attribute("Z")) tString = tString + "Z=" + elem->Attribute("Z");
-                                else {tString = tString + "Z=" + to_string(0);}
-                                tString = tString + ";";
-                                transforms.push_back(tString);
+                                else { tString = tString + "Z=" + to_string(0); }
                             }
-                        }
-                        else if (elemAtual == "rotate") {
+                            tString = tString + ";";
+                            // push transform to vector
+                            transforms.push_back(tString);
+                        } else if (elemAtual == "rotate") {
                             tString = "rotate:";
                             if (elem->Attribute("angle")) tString = tString + "angle=" + elem->Attribute("angle") + ",";
-                            else if(elem->Attribute("time")) {tString = tString + "time=" + elem->Attribute("time") + ",";
+                            else if (elem->Attribute("time")) tString = tString + "time=" + elem->Attribute("time") + ",";
                             if (elem->Attribute("axisX")) tString = tString + "X=" + elem->Attribute("axisX") + ",";
-                            else {tString = tString + "X=" + to_string(0) + ",";}
+                            else { tString = tString + "X=" + to_string(0) + ","; }
                             if (elem->Attribute("axisY")) tString = tString + "Y=" + elem->Attribute("axisY") + ",";
-                            else {tString = tString + "Y=" + to_string(0) + ",";}
+                            else { tString = tString + "Y=" + to_string(0) + ","; }
                             if (elem->Attribute("axisZ")) tString = tString + "Z=" + elem->Attribute("axisZ");
-                            else {tString = tString + "Z=" + to_string(0);}
+                            else { tString = tString + "Z=" + to_string(0); }
                             tString = tString + ";";
                             transforms.push_back(tString);
-                        }
-                        else if (elemAtual == "scale") {
+                        } else if (elemAtual == "scale") {
                             tString = "scale:";
                             if (elem->Attribute("X")) tString = tString + "X=" + elem->Attribute("X") + ",";
-                            else {tString = tString + "X=" + to_string(0) + ",";}
+                            else { tString = tString + "X=" + to_string(0) + ","; }
                             if (elem->Attribute("Y")) tString = tString + "Y=" + elem->Attribute("Y") + ",";
-                            else {tString = tString + "Y=" + to_string(0) + ",";}
+                            else { tString = tString + "Y=" + to_string(0) + ","; }
                             if (elem->Attribute("Z")) tString = tString + "Z=" + elem->Attribute("Z");
-                            else {tString = tString + "Z=" + to_string(0);}
+                            else { tString = tString + "Z=" + to_string(0); }
                             tString = tString + ";";
                             transforms.push_back(tString);
-                        }
-                        else if (elemAtual == "models") {
+                        } else if (elemAtual == "models") {
                             model = elem->FirstChildElement();
                             while (model) {
                                 tString = model->Attribute("file");
                                 tString = tString + ";";
-                                for(int i = 0; i<transforms.size(); i++) {
+                                for (int i = 0; i < transforms.size(); i++) {
                                     tString = tString + transforms[i];
                                 }
+                                tString.pop_back();
                                 res.push_back(tString);
                                 model = model->NextSiblingElement("model");
                             }
-                        }
-                        else if (elemAtual == "group") {
+                        } else if (elemAtual == "group") {
                             elem = elem->FirstChildElement();
                             continue;
                         }
@@ -340,14 +398,15 @@ vector<string> parseXml(const char* file) {
                         elem = elem->NextSiblingElement();
                     } else break;
                 }
+                transforms.clear();
+                group = group->NextSiblingElement();
             }
         }
-    }else{
+    } else {
         cout << "Erro a dar parse XML" << "\n";
     }
-    for (int i = 0; i<res.size(); i++) cout << res[i] << "\n";
- }
- return res;
+    //for (int i = 0; i < res.size(); i++) cout << res[i] << "\n";
+    return res;
 }
 
 /**
@@ -410,13 +469,24 @@ void renderScene(void) {
     glutSwapBuffers();
 }
 
+void init(const char *file) {
+    if (!models_scene ) {
+        #ifndef __APPLE__
+        glewInit();
+        #endif
+        glEnableClientState(GL_VERTEX_ARRAY);
 
+        execut(file);
+
+        init_vbo_scene(models_scene);
+    }
+}
 
 int main(int argc, char **argv) {
     //std::cout << argv[1] << "\n";
 
 
-    if (argc > 1) execut(argv[1]);
+    if (argc > 1) if (argc > 1) init(argv[1]);
 
 
     //vector<string> s1 = parseXml(argv[1]);

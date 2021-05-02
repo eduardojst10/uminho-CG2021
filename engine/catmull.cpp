@@ -11,6 +11,7 @@
 #include <GL/glut.h>
 #include <cstdio>
 #include <vector>
+#include "catmull.h"
 
 #endif
 
@@ -154,4 +155,11 @@ float * calcula_catmull(float time, std::vector<float> * v) {
     glMultMatrixf((float *) (m));
 
     return (float *) (m);
+}
+
+
+void add_points_catmull(TRANSFORMACAO t, float x,float y, float z){
+    t->pontos->push_back(x);
+    t->pontos->push_back(y);
+    t->pontos->push_back(z);
 }

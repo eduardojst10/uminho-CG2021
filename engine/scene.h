@@ -17,5 +17,6 @@ SCENE init_scene();
 void add_model(SCENE g, MODEL m_add);
 void draw_scene (SCENE g);
 void aplica_transformacoes(MODEL g);
+void init_vbo_scene (SCENE g);
 
 #endif

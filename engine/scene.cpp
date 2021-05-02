@@ -50,4 +50,8 @@ void draw_scene(SCENE g){
     glPopMatrix();
 }
 
-
+void init_vbo_scene (SCENE g) {
+    for(MODEL m : *(g->models)) {
+        init_vbo_model(m);
+    }
+}

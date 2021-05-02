@@ -29,6 +29,8 @@ float * calcula_curve(TRANSFORMACAO t);
 float * invert_order_matrix(float m[4][4]);
 float * calcula_rotation_time(TRANSFORMACAO t);
 float to_radial(float angle);
+float * calcula_tempo(TRANSFORMACAO t);
+TRANSFORMACAO rotation_time(double x, double y, double z, double time);
 
 
 #endif //GENERATOR_TRANSFORMACAO_H

@@ -155,7 +155,7 @@ void init_vbo_model(MODEL m) {
 
         glGenBuffers(1, m->vertexBuffer);
         glBindBuffer(GL_ARRAY_BUFFER, m->vertexBuffer[0]);
-        glBufferData(GL_ARRAY_BUFFER, m->pontos->size() * sizeof(float), aux, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, m->pontos->size() * sizeof(float) * 3, aux, GL_STATIC_DRAW);
     }
 }
 
@@ -173,9 +173,9 @@ void draw_modelVBO(MODEL m) {
         }
             
    }
-
+ 
     glBindBuffer(GL_ARRAY_BUFFER,m->vertexBuffer[0]);
     glVertexPointer(3,GL_FLOAT,0, 0);
+    glDrawArrays(GL_TRIANGLES, 0, vertices.size()/3);
 
-    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 }
