@@ -6,7 +6,7 @@
 #include "models/cone.h"
 #include "models/sphere.h"
 #include "models/box.h"
-
+#include "models/bezierPatch.h"
 
 using namespace std;
 
@@ -28,7 +28,7 @@ int validaModelo(char *modelo, std::vector<std::string> inputs){
 
 int main(int argc, char** argv) {
 
-    vector<string> validos = {"plane", "box","sphere","cone"};
+    vector<string> validos = {"plane", "box","sphere","cone","bezierPatch"};
 
     if(argc > 1 && validaModelo(argv[1],validos)){
 
@@ -47,6 +47,11 @@ int main(int argc, char** argv) {
         if(strcmp(argv[1],"cone")==0){
             cone(argv[6],atof(argv[2]),atof(argv[3]),atoi(argv[4]),atoi(argv[5]));
 
+        }
+
+        if(strcmp(argv[1],"bezierPatch") == 0){
+            int tess = atoi(argv[3]);
+            patch(argv[4],tess,argv[2]);
         }
     }else{
         cout << "Input não tem formato requerido" << "\n";

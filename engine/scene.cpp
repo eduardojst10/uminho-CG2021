@@ -1,17 +1,12 @@
-//
-// Created by eduardo on 11/03/21.
-//
-
 #include "scene.h"
+#include "transformacao.h"
+#include "model.h"
 #include <vector>
 #include <cstdlib>
 #include <GL/gl.h>
 #include <cstdio>
 
-struct scene {
-    std::vector<MODEL> * models;
 
-};
 
 SCENE init_scene() {
     SCENE g = (SCENE) malloc(sizeof(struct scene));
@@ -21,18 +16,49 @@ SCENE init_scene() {
     return g;
 }
 
+/**
+ * Função que adiciona um modelo
+ * @param g
+ * @param m_add
+ */
+void add_model(SCENE s, MODEL m) {
+    if (s) {
+        s->models->push_back(m);
 
-void add_model(SCENE g, MODEL m_add) {
-    if (g) {
-        g->models->push_back(m_add);
+    }
+}
+void aplica_transformacoes(MODEL g){
+    for (TRANSFORMACAO t: *(g->transformacoes)) {
+        glMultMatrixf(get_matrix(t));
     }
 }
 
+/**
+ * Funcao que desenha um model
+ * @param g
+ */
+void draw_scene(SCENE g){
+    glPushMatrix();
 
-void draw_scene (SCENE g) {
+    for(int i= 0; i<g->models->size();i++) {
+        MODEL  m = g->models->at(i);
+        if(tem_Transformacoes(m)) {
+          aplica_transformacoes(m);
+        }
+        draw_modelVBO(m);
+    }
+    glPopMatrix();
+}
+
+/**
+ * Init de scene com vbo
+ * @param g
+ */
+void init_vbo_scene (SCENE g) {
+
     for(MODEL m : *(g->models)) {
-        drawModel(m);
+        init_vbo_model(m);
+
     }
+
 }
-
-

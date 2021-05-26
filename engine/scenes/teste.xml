@@ -1,0 +1,8 @@
+<scene>
+	  <group>
+		  	<rotate angle=36 axisX=0 axisY=1 axisZ=0 />
+		    <models>
+			      <model file= "plane.3d" />
+		    </models>
+	  </group>
+</scene>

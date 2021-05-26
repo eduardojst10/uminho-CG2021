@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="generator"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="generator">
+				<Option output="/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/generator" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 generator"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="generator/fast">
+				<Option output="/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/generator" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 generator/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/eduardo/Desktop/CG2021-OFICIAL/generator/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/eduardo/Desktop/CG2021-OFICIAL/generator/main.cpp">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/home/eduardo/Desktop/CG2021-OFICIAL/generator/models/bezierPatch.cpp">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/home/eduardo/Desktop/CG2021-OFICIAL/generator/models/bezierPatch.h">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/home/eduardo/Desktop/CG2021-OFICIAL/generator/models/box.cpp">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/home/eduardo/Desktop/CG2021-OFICIAL/generator/models/box.h">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/home/eduardo/Desktop/CG2021-OFICIAL/generator/models/cone.cpp">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/home/eduardo/Desktop/CG2021-OFICIAL/generator/models/cone.h">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/home/eduardo/Desktop/CG2021-OFICIAL/generator/models/plano.cpp">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/home/eduardo/Desktop/CG2021-OFICIAL/generator/models/plano.h">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/home/eduardo/Desktop/CG2021-OFICIAL/generator/models/sphere.cpp">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/home/eduardo/Desktop/CG2021-OFICIAL/generator/models/sphere.h">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/home/eduardo/Desktop/CG2021-OFICIAL/generator/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -18,13 +18,12 @@
 #include <iostream>
 #include <iosfwd>
 #include <vector>
+#include <sstream>
 #ifndef GENERATOR_ENGINE_H
 #define GENERATOR_ENGINE_H
 
 struct vertice{
-    float x;
-    float y;
-    float z;
+    float pontos[4];
 };
 typedef struct vertice * VERTICE;
 

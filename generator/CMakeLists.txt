@@ -9,7 +9,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 
 
-add_executable(${PROJECT_NAME} main.cpp models/plano.cpp  models/box.cpp  models/sphere.cpp  models/cone.cpp )
+add_executable(${PROJECT_NAME} main.cpp models/plano.cpp  models/box.cpp  models/sphere.cpp  models/cone.cpp models/bezierPatch.cpp models/bezierPatch.h)
 
 find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})
